@@ -6,7 +6,7 @@ import classes from "./MainNavigation.module.css";
 const MainNavigation = () => {
   return (
     <header className={classes.header}>
-      <div className="ui secondary menu">
+      <div className="ui secondary stackable menu">
         <h2 className="item">E-learning System</h2>
 
         <NavLink to="/dashboard" className="item" activeClassName="active">
