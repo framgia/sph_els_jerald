@@ -8,6 +8,7 @@ import Layout from "./UI/Layout";
 
 // Pages
 import Dashboard from "./Pages/Dashboard";
+import Categories from "./Pages/Categories";
 import NotFound from "./Pages/NotFound";
 
 function App() {
@@ -20,6 +21,9 @@ function App() {
           </Route>
           <Route path="/dashboard" exact>
             <Dashboard />
+          </Route>
+          <Route path="/categories" exact>
+            <Categories />
           </Route>
           <Route path="*">
             <NotFound />
