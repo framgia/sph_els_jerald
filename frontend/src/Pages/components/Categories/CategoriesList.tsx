@@ -32,7 +32,7 @@ const CategoriesList = () => {
             <div className="ui segment raised very padded">
               <h2 className="ui header">{item.title}</h2>
               <p>{item.description}</p>
-              <Link to="/" className="ui primary button">
+              <Link to={`/categories/${item.id}`} className="ui primary button">
                 Start Lesson
               </Link>
             </div>

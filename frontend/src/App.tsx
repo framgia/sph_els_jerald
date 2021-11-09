@@ -10,6 +10,7 @@ import Layout from "./UI/Layout";
 import Dashboard from "./Pages/Dashboard";
 import Categories from "./Pages/Categories";
 import NotFound from "./Pages/NotFound";
+import StartLesson from "./Pages/StartLesson";
 
 function App() {
   return (
@@ -24,6 +25,9 @@ function App() {
           </Route>
           <Route path="/categories" exact>
             <Categories />
+          </Route>
+          <Route path="/categories/:quizId">
+            <StartLesson />
           </Route>
           <Route path="*">
             <NotFound />
