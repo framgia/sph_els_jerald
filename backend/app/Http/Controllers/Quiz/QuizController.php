@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Quiz;
 
 use App\Models\Quiz;
+use App\Models\Question;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -45,9 +46,9 @@ class QuizController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Quiz $quiz)
     {
-        //
+        return Quiz::find($quiz);
     }
 
     /**
@@ -82,5 +83,15 @@ class QuizController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getQuestions(Quiz $quiz)
+    {
+        return $quiz->questions()->with('choices')->get();
     }
 }
