@@ -22,4 +22,4 @@ use App\Http\Controllers\Quiz\QuizController;
 /**
  * Quizzes
  */
-Route::resource('quizzes', QuizController::class)->only(['index', 'show', 'store']);
+Route::resource('quizzes', QuizController::class)->only(['index', 'show']);
