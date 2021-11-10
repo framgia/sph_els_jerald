@@ -36,7 +36,12 @@ class QuizController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'title' => 'required',
+            'description' => 'required',
+        ]);
+
+        return Quiz::create($request->all());
     }
 
     /**
