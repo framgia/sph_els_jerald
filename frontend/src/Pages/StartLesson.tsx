@@ -18,9 +18,7 @@ const Lesson = () => {
   const [score, setScore] = useState(0);
   const [answers, setAnswers] = useState<Answer[]>([]);
 
-  const params: { quizId: string } = useParams();
-
-  const { quizId } = params;
+  const { quizId } = useParams<{ quizId: string }>();
 
   const data = useAppSelector(selectLesson);
 
