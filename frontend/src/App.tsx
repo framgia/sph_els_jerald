@@ -11,6 +11,7 @@ import Dashboard from "./Pages/Dashboard";
 import Categories from "./Pages/Categories";
 import NotFound from "./Pages/NotFound";
 import StartLesson from "./Pages/StartLesson";
+import AdminCategories from "./Pages/AdminCategories";
 
 function App() {
   return (
@@ -28,6 +29,12 @@ function App() {
           </Route>
           <Route path="/categories/:quizId">
             <StartLesson />
+          </Route>
+          <Route path="/admin" exact>
+            <Redirect to="/admin/categories" />
+          </Route>
+          <Route path="/admin/categories">
+            <AdminCategories />
           </Route>
           <Route path="*">
             <NotFound />

@@ -16,6 +16,14 @@ const MainNavigation = () => {
           Categories
         </NavLink>
 
+        <NavLink
+          to="/admin/categories"
+          className="item"
+          activeClassName="active"
+        >
+          Categories
+        </NavLink>
+
         <div className="right menu">
           <a className="ui item" href="/">
             Logout
