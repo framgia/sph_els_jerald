@@ -1,9 +1,6 @@
 import { Fragment, useEffect, useState } from "react";
-
 import { Link } from "react-router-dom";
-
 import { useAppSelector, useAppDispatch } from "../app/hooks";
-
 import {
   selectAdminQuizzes,
   fetchAdminQuizAsync,
@@ -23,7 +20,6 @@ const AdminCategories = () => {
   return (
     <Fragment>
       <h2>Categories</h2>
-
       <table className="ui celled padded table stackable">
         <thead>
           <tr>
@@ -40,12 +36,7 @@ const AdminCategories = () => {
                   <Link to="/">{item.title}</Link>
                 </h4>
               </td>
-              <td>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Voluptas quia exercitationem eius, esse magnam earum architecto
-                ipsum facere neque rem quae alias accusamus possimus? Commodi
-                eligendi nisi ipsam tenetur libero!
-              </td>
+              <td>{item.description}</td>
               <td className="single line">
                 <Link to="/">
                   <button className="ui button primary">Add Word</button>
@@ -63,7 +54,7 @@ const AdminCategories = () => {
         <tfoot>
           <tr>
             <th colSpan={5}>
-              <Link to="/">
+              <Link to={"/admin/add-category"}>
                 <button className="ui button primary">Add Category</button>
               </Link>
               {(data.quizzes.next_page_url || data.quizzes.prev_page_url) && (

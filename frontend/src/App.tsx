@@ -1,6 +1,4 @@
 import React, { Fragment } from "react";
-// import { Counter } from './features/counter/Counter';
-
 import { Route, Switch, Redirect } from "react-router-dom";
 
 // UI
@@ -14,6 +12,7 @@ import StartLesson from "./Pages/StartLesson";
 import AdminCategories from "./Pages/AdminCategories";
 import SignUp from "./Pages/SignUp";
 import SignIn from "./Pages/SignIn";
+import AddCategory from "./Pages/components/AdminCategories/AddCategory";
 
 function App() {
   return (
@@ -37,6 +36,9 @@ function App() {
           </Route>
           <Route path="/admin/categories">
             <AdminCategories />
+          </Route>
+          <Route path="/admin/add-category">
+            <AddCategory />
           </Route>
           <Route path="/signup" exact>
             <SignUp />

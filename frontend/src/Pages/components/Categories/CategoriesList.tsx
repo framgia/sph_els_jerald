@@ -39,7 +39,7 @@ const CategoriesList = () => {
           </div>
         ))}
 
-      {data.status === "idle" && !data.quizzes && (
+      {data.status === "idle" && !data.quizzes[0] && (
         <h2 className="ui message">No categories found</h2>
       )}
     </Fragment>

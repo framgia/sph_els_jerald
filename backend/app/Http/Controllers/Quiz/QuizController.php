@@ -37,12 +37,7 @@ class QuizController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'title' => 'required',
-            'description' => 'required',
-        ]);
-
-        return Quiz::create($request->all());
+        //
     }
 
     /**
@@ -98,26 +93,5 @@ class QuizController extends Controller
     public function getQuestions(Quiz $quiz)
     {
         return $quiz->questions()->with('choices')->get();
-    }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function getAdminQuizzes()
-    {
-        return Quiz::simplePaginate(5);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-     public function deleteAdminQuiz(Quiz $quiz)
-    {
-        return $quiz->delete();
     }
 }

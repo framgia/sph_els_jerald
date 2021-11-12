@@ -89,32 +89,48 @@ const Lesson = () => {
           </div>
         </div>
       ) : (
-        <div className="ui container segment">
-          <div className="ui grid">
-            <div className="eight wide column centered">
-              {data.quiz.map((item) => (
-                <h2 key={item.id}>{item.title}</h2>
-              ))}
-              <h1>{data.questions[currentQuestion].word}</h1>
-            </div>
-            <div className="eight wide column centered">
-              <h2>
-                {currentQuestion + 1} out of {data.questions.length}
-              </h2>
-              {data.questions[currentQuestion].choices.map((choice) => (
-                <div className={classes.choices} key={choice.id}>
-                  <button
-                    className="ui button primary"
-                    onClick={() =>
-                      answerClickHandler(choice.is_correct, choice.id)
-                    }
-                  >
-                    {choice.value}
-                  </button>
+        <Fragment>
+          {data.status === "idle" && data.quiz[0] && data.questions[0] && (
+            <div className="ui container segment">
+              <div className="ui grid">
+                <div className="eight wide column centered">
+                  {data.quiz.map((item) => (
+                    <h2 key={item.id}>{item.title}</h2>
+                  ))}
+                  <h1>{data.questions[currentQuestion].word}</h1>
                 </div>
-              ))}
+                <div className="eight wide column centered">
+                  <h2>
+                    {currentQuestion + 1} out of {data.questions.length}
+                  </h2>
+                  {data.questions[currentQuestion].choices.map((choice) => (
+                    <div className={classes.choices} key={choice.id}>
+                      <button
+                        className="ui button primary"
+                        onClick={() =>
+                          answerClickHandler(choice.is_correct, choice.id)
+                        }
+                      >
+                        {choice.value}
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
-          </div>
+          )}
+        </Fragment>
+      )}
+
+      {data.status === "idle" && !data.questions[0] && (
+        // <h2 className="ui message">No questions found</h2>
+
+        <div className="ui message">
+          <div className="header">No questions found</div>
+          <p>
+            Are you ready to answer? Don't worry we will make as soon as
+            possible.
+          </p>
         </div>
       )}
     </Fragment>
