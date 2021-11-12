@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Quiz\QuizController;
+use App\Http\Controllers\Admin\AdminQuizController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,7 +23,12 @@ use App\Http\Controllers\Quiz\QuizController;
 /**
  * Quizzes
  */
-Route::resource('quizzes', QuizController::class)->only(['index', 'show', 'store']);
+Route::resource('quizzes', QuizController::class)->only(['index', 'show']);
 Route::get('quizzes/{quiz}/questions', [QuizController::class, 'getQuestions'])->name('quizzes.questions');
-Route::get('admin/quizzes', [QuizController::class, 'getAdminQuizzes'])->name('admin.quizzes');
-Route::delete('admin/quizzes/{quiz}', [QuizController::class, 'deleteAdminQuiz'])->name('admin.quizzes.destroy');
+
+/**
+ * Admin
+ */
+Route::get('admin/quizzes', [AdminQuizController::class, 'getAdminQuizzes'])->name('admin.quizzes.index');
+Route::post('admin/quizzes', [AdminQuizController::class, 'storeAdminQuiz'])->name('admin.quizzes.store');
+Route::delete('admin/quizzes/{quiz}', [AdminQuizController::class, 'deleteAdminQuiz'])->name('admin.quizzes.destroy');
