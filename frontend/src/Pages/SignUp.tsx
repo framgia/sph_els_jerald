@@ -9,7 +9,14 @@ const SignUp = () => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data: any) => {
+  const onSubmit = (data: {
+    firstName: string;
+    middleName: string;
+    lastName: string;
+    email: string;
+    password: string;
+    confirmPassword: string;
+  }) => {
     const passwordMatch = data.password === data.confirmPassword;
     setPasswordMatch(passwordMatch);
 
