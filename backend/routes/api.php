@@ -25,3 +25,4 @@ use App\Http\Controllers\Quiz\QuizController;
 Route::resource('quizzes', QuizController::class)->only(['index', 'show', 'store']);
 Route::get('quizzes/{quiz}/questions', [QuizController::class, 'getQuestions'])->name('quizzes.questions');
 Route::get('admin/quizzes', [QuizController::class, 'getAdminQuizzes'])->name('admin.quizzes');
+Route::delete('admin/quizzes/{quiz}', [QuizController::class, 'deleteAdminQuiz'])->name('admin.quizzes.destroy');
