@@ -13,6 +13,7 @@ import NotFound from "./Pages/NotFound";
 import StartLesson from "./Pages/StartLesson";
 import AdminCategories from "./Pages/AdminCategories";
 import SignUp from "./Pages/SignUp";
+import SignIn from "./Pages/SignIn";
 
 function App() {
   return (
@@ -39,6 +40,9 @@ function App() {
           </Route>
           <Route path="/signup" exact>
             <SignUp />
+          </Route>
+          <Route path="/signin">
+            <SignIn />
           </Route>
           <Route path="*">
             <NotFound />
