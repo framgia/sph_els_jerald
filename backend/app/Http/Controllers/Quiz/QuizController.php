@@ -99,4 +99,14 @@ class QuizController extends Controller
     {
         return $quiz->questions()->with('choices')->get();
     }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getAdminQuizzes()
+    {
+        return Quiz::simplePaginate(5);
+    }
 }

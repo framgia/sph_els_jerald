@@ -1,11 +1,13 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 import quizReducer from "../features/Categories/categoriesSlice";
 import lessonReducer from "../features/StartLesson/lessonSlice";
+import adminQuizReducer from "../features/AdminCategories/adminCategoriesSlice";
 
 export const store = configureStore({
   reducer: {
     quiz: quizReducer,
     lesson: lessonReducer,
+    adminQuiz: adminQuizReducer,
   },
 });
 

@@ -1,8 +1,25 @@
-import { Fragment } from "react";
+import { Fragment, useEffect, useState } from "react";
 
 import { Link } from "react-router-dom";
 
+import { useAppSelector, useAppDispatch } from "../app/hooks";
+
+import {
+  selectAdminQuizzes,
+  fetchAdminQuizAsync,
+} from "../features/AdminCategories/adminCategoriesSlice";
+import { Quiz } from "../Types/Quiz";
+
 const AdminCategories = () => {
+  const [page, setPage] = useState(1);
+
+  const data = useAppSelector(selectAdminQuizzes);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(fetchAdminQuizAsync(page));
+  }, [dispatch, page]);
+
   return (
     <Fragment>
       <h2>Categories</h2>
@@ -16,85 +33,60 @@ const AdminCategories = () => {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>
-              <h4 className="ui center aligned header single line">
-                <Link to="/">Basic 500</Link>
-              </h4>
-            </td>
-            <td>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas
-              quia exercitationem eius, esse magnam earum architecto ipsum
-              facere neque rem quae alias accusamus possimus? Commodi eligendi
-              nisi ipsam tenetur libero!
-            </td>
-            <td className="single line">
-              <Link to="/">
-                <button className="ui button primary">Add Word</button>
-              </Link>
-              <Link to="/">
-                <button className="ui button">Edit</button>
-              </Link>
-              <Link to="/">
-                <button className="ui red button">Delete</button>
-              </Link>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <h4 className="ui center aligned header single line">
-                <Link to="/">Basic 500</Link>
-              </h4>
-            </td>
-            <td>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas
-              quia exercitationem eius, esse magnam earum architecto ipsum
-              facere neque rem quae alias accusamus possimus? Commodi eligendi
-              nisi ipsam tenetur libero!
-            </td>
-            <td className="single line">
-              <Link to="/">
-                <button className="ui button primary">Add Word</button>
-              </Link>
-              <button className="ui button">Edit</button>
-              <button className="ui red button">Delete</button>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <h4 className="ui center aligned header single line">
-                <Link to="/">Basic 500</Link>
-              </h4>
-            </td>
-            <td>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas
-              quia exercitationem eius, esse magnam earum architecto ipsum
-              facere neque rem quae alias accusamus possimus? Commodi eligendi
-              nisi ipsam tenetur libero!
-            </td>
-            <td className="single line">
-              <Link to="/">
-                <button className="ui button primary">Add Word</button>
-              </Link>
-              <button className="ui button">Edit</button>
-              <button className="ui red button">Delete</button>
-            </td>
-          </tr>
+          {data.quizzes.data.map((item: Quiz) => (
+            <tr key={item.id}>
+              <td>
+                <h4 className="ui header">
+                  <Link to="/">{item.title}</Link>
+                </h4>
+              </td>
+              <td>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Voluptas quia exercitationem eius, esse magnam earum architecto
+                ipsum facere neque rem quae alias accusamus possimus? Commodi
+                eligendi nisi ipsam tenetur libero!
+              </td>
+              <td className="single line">
+                <Link to="/">
+                  <button className="ui button primary">Add Word</button>
+                </Link>
+                <Link to="/">
+                  <button className="ui button">Edit</button>
+                </Link>
+                <Link to="/">
+                  <button className="ui red button">Delete</button>
+                </Link>
+              </td>
+            </tr>
+          ))}
         </tbody>
         <tfoot>
           <tr>
             <th colSpan={5}>
               <Link to="/">
-                <button className="ui button primary">Add Question</button>
+                <button className="ui button primary">Add Category</button>
               </Link>
-              <div className="ui right floated pagination menu">
-                <Link className="icon item" to="/">
-                  <i className="left chevron icon"></i>
-                </Link>
-                <Link className="icon item" to="/">
-                  <i className="right chevron icon"></i>
-                </Link>
-              </div>
+              {(data.quizzes.next_page_url || data.quizzes.prev_page_url) && (
+                <div className="ui right floated pagination menu">
+                  {data.quizzes.prev_page_url && (
+                    <button
+                      className="ui button item"
+                      onClick={() => setPage((state) => state - 1)}
+                    >
+                      Previous
+                    </button>
+                  )}
+
+                  {data.quizzes.next_page_url && (
+                    <button
+                      className="ui button item"
+                      onClick={() => setPage((state) => state + 1)}
+                    >
+                      Next
+                    </button>
+                  )}
+                </div>
+              )}
             </th>
           </tr>
         </tfoot>

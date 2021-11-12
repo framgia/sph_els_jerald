@@ -17,7 +17,7 @@ export const fetchQuizAsync = createAsyncThunk(
   "quizzes/fetchQuiz",
   async () => {
     const response = await fetchQuiz();
-    return response;
+    return response.data;
   }
 );
 
