@@ -1,6 +1,8 @@
 import { Fragment, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "../app/hooks";
+import { deleteAdminQuiz } from "../features/AdminCategories/adminCategoriesAPI";
+
 import {
   selectAdminQuizzes,
   fetchAdminQuizAsync,
@@ -16,6 +18,12 @@ const AdminCategories = () => {
   useEffect(() => {
     dispatch(fetchAdminQuizAsync(page));
   }, [dispatch, page]);
+
+  const onDeleteHandler = async (quizId: number) => {
+    await deleteAdminQuiz(quizId);
+
+    dispatch(fetchAdminQuizAsync(page));
+  };
 
   return (
     <Fragment>
@@ -44,9 +52,12 @@ const AdminCategories = () => {
                 <Link to="/">
                   <button className="ui button">Edit</button>
                 </Link>
-                <Link to="/">
-                  <button className="ui red button">Delete</button>
-                </Link>
+                <button
+                  className="ui red button"
+                  onClick={() => onDeleteHandler(item.id)}
+                >
+                  Delete
+                </button>
               </td>
             </tr>
           ))}

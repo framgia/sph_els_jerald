@@ -7,3 +7,7 @@ export const fetchAdminQuizzes = (page: number) => {
 export const saveAdminQuiz = (data: { title: string; description: string }) => {
   return axios.post("http://127.0.0.1:8000/api/admin/quizzes", data);
 };
+
+export const deleteAdminQuiz = (quizId: number) => {
+  return axios.delete(`http://127.0.0.1:8000/api/admin/quizzes/${quizId}`);
+};
