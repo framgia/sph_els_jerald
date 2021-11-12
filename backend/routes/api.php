@@ -22,5 +22,5 @@ use App\Http\Controllers\Quiz\QuizController;
 /**
  * Quizzes
  */
-Route::resource('quizzes', QuizController::class)->only(['index', 'show']);
+Route::resource('quizzes', QuizController::class)->only(['index', 'show', 'store']);
 Route::get('quizzes/{quiz}/questions', [QuizController::class, 'getQuestions'])->name('quizzes.questions');
