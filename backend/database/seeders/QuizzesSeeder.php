@@ -16,7 +16,7 @@ class QuizzesSeeder extends Seeder
      */
     public function run()
     {
-        $quizzes = Quiz::factory(5)->create();
+        $quizzes = Quiz::factory(20)->create();
 
         foreach ($quizzes as $quiz) {
             $questions = Question::factory(5)->create(['quiz_id' => $quiz->id]);
