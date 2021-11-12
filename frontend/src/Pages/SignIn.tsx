@@ -1,105 +1,68 @@
-import { Fragment, useState } from "react";
+import { useForm } from "react-hook-form";
 
 const SignIn = () => {
-  const [enteredEmail, setEnteredEmail] = useState("");
-  const [enteredPassword, setEnteredPassword] = useState("");
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
-  const [errorEmail, setErrorEmail] = useState(false);
-  const [errorPassword, setErrorPassword] = useState(false);
-
-  const emailChangeHandler = (event: any) => {
-    setEnteredEmail(event.target.value);
-  };
-
-  const passwordChangeHandler = (event: any) => {
-    setEnteredPassword(event.target.value);
-  };
-
-  const loginHandler = (event: any) => {
-    event.preventDefault();
-
-    if (enteredEmail.trim().length === 0 || !enteredEmail.includes("@")) {
-      setErrorEmail(true);
-    } else {
-      setErrorEmail(false);
-    }
-
-    if (
-      enteredPassword.trim().length === 0 ||
-      enteredPassword.trim().length < 7
-    ) {
-      setErrorPassword(true);
-    } else {
-      setErrorPassword(false);
-    }
-
-    if (
-      enteredEmail.trim().length === 0 ||
-      !enteredEmail.includes("@") ||
-      enteredPassword.trim().length === 0 ||
-      enteredPassword.trim().length < 7
-    ) {
-      return;
-    }
-
-    console.log(enteredEmail, enteredPassword);
+  const onSubmit = (data: { email: string; password: string }) => {
+    console.log(data);
   };
 
   return (
-    <Fragment>
-      <div className="ui stackable grid centered">
-        <div className="eight wide column">
-          <form
-            className="ui large form"
-            onSubmit={loginHandler}
-            id="sign-up-form"
-          >
-            <div className="ui stacked segment">
-              <h2>Sign In to your Account</h2>
-              <div className="field">
-                <div className="ui left icon input">
-                  <i className="user icon"></i>
-                  <input
-                    type="email"
-                    name="email"
-                    placeholder="E-mail address"
-                    required
-                    value={enteredEmail}
-                    onChange={emailChangeHandler}
-                  />
-                </div>
+    <div className="ui stackable grid centered">
+      <div className="eight wide column">
+        <div className="ui stacked segment">
+          <h2>Sign In</h2>
+          <form className="ui large form" onSubmit={handleSubmit(onSubmit)}>
+            <div className="field">
+              <div className="ui left icon input">
+                <i className="user icon"></i>
+                <input
+                  type="text"
+                  placeholder="Email"
+                  {...register("email", {
+                    required: "Email address is required",
+                    pattern: {
+                      value: /^\S+@\S+$/i,
+                      message: "Please enter valid email address",
+                    },
+                  })}
+                />
               </div>
-              <div className="field">
-                <div className="ui left icon input">
-                  <i className="lock icon"></i>
-                  <input
-                    type="password"
-                    name="password"
-                    placeholder="Password"
-                    required
-                    value={enteredPassword}
-                    onChange={passwordChangeHandler}
-                  />
-                </div>
-              </div>
-              <button className="ui fluid large primary submit button">
-                Sign In
-              </button>
+              {errors.email && (
+                <p className="ui mini message">{errors.email.message}</p>
+              )}
             </div>
+            <div className="field">
+              <div className="ui left icon input">
+                <i className="lock icon"></i>
+                <input
+                  type="password"
+                  placeholder="Password"
+                  {...register("password", {
+                    required: "Password is required",
+                    minLength: {
+                      value: 7,
+                      message: "Password must be atleast 7 characters",
+                    },
+                  })}
+                />
+              </div>
+              {errors.password && (
+                <p className="ui mini message">{errors.password.message}</p>
+              )}
+            </div>
+
+            <button className="ui fluid large primary submit button">
+              Sign In
+            </button>
           </form>
-          {(errorEmail || errorPassword) && (
-            <div className="ui error message">
-              <ul>
-                {errorEmail && <li>Please enter valid email address</li>}
-                {errorPassword && (
-                  <li>Please enter password at least 7 characters</li>
-                )}
-              </ul>
-            </div>
-          )}
         </div>
       </div>
-    </Fragment>
+    </div>
   );
 };
 
