@@ -12,6 +12,7 @@ import Categories from "./Pages/Categories";
 import NotFound from "./Pages/NotFound";
 import StartLesson from "./Pages/StartLesson";
 import AdminCategories from "./Pages/AdminCategories";
+import SignUp from "./Pages/SignUp";
 
 function App() {
   return (
@@ -27,7 +28,7 @@ function App() {
           <Route path="/categories" exact>
             <Categories />
           </Route>
-          <Route path="/categories/:quizId">
+          <Route path="/categories/:quizId" exact>
             <StartLesson />
           </Route>
           <Route path="/admin" exact>
@@ -35,6 +36,9 @@ function App() {
           </Route>
           <Route path="/admin/categories">
             <AdminCategories />
+          </Route>
+          <Route path="/signup" exact>
+            <SignUp />
           </Route>
           <Route path="*">
             <NotFound />
