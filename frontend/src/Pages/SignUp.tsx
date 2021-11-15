@@ -1,7 +1,10 @@
 import { useState } from "react";
+import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { registerUser } from "../features/SignUp/signUpAPI";
 
 const SignUp = () => {
+  const history = useHistory();
   const [passwordMatch, setPasswordMatch] = useState(true);
   const {
     register,
@@ -9,7 +12,7 @@ const SignUp = () => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data: {
+  const onSubmit = async (data: {
     firstName: string;
     middleName: string;
     lastName: string;
@@ -21,7 +24,9 @@ const SignUp = () => {
     setPasswordMatch(passwordMatch);
 
     if (passwordMatch) {
-      console.log(data);
+      await registerUser(data);
+
+      history.push("/signin");
     }
   };
 
