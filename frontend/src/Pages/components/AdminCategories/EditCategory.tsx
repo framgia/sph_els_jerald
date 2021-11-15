@@ -1,17 +1,32 @@
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { useHistory } from "react-router-dom";
-import { saveAdminQuiz } from "../../../features/AdminCategories/adminCategoriesAPI";
+import { useHistory, useParams } from "react-router-dom";
 
-const AddCategory = () => {
+import { fetchQuizDetail } from "../../../features/StartLesson/lessonAPI";
+import { updateAdminQuiz } from "../../../features/AdminCategories/adminCategoriesAPI";
+
+const EditCategory = () => {
+  const { quizId } = useParams<{ quizId: string }>();
   const history = useHistory();
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+    reset,
+  } = useForm({ defaultValues: { title: "", description: "" } });
+
+  useEffect(() => {
+    (async () => {
+      const quiz = await fetchQuizDetail(Number(quizId));
+      reset({
+        title: quiz.data[0].title,
+        description: quiz.data[0].description,
+      });
+    })();
+  }, [quizId, reset]);
 
   const onSubmit = async (data: { title: string; description: string }) => {
-    await saveAdminQuiz(data);
+    await updateAdminQuiz(Number(quizId), data);
 
     history.push("/admin/categories");
   };
@@ -20,7 +35,7 @@ const AddCategory = () => {
     <div className="ui stackable grid centered">
       <div className="eight wide column">
         <div className="ui stacked segment">
-          <h2>Add Category</h2>
+          <h2>Edit Category</h2>
           <form className="ui large form" onSubmit={handleSubmit(onSubmit)}>
             <div className="field">
               <label>Title</label>
@@ -60,4 +75,4 @@ const AddCategory = () => {
   );
 };
 
-export default AddCategory;
+export default EditCategory;

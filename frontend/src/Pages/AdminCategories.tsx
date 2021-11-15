@@ -49,7 +49,7 @@ const AdminCategories = () => {
                 <Link to="/">
                   <button className="ui button primary">Add Word</button>
                 </Link>
-                <Link to="/">
+                <Link to={`/admin/edit-category/${item.id}`}>
                   <button className="ui button">Edit</button>
                 </Link>
                 <button
