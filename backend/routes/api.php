@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Quiz\QuizController;
+use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\Admin\AdminQuizController;
 
 /*
@@ -25,6 +26,11 @@ use App\Http\Controllers\Admin\AdminQuizController;
  */
 Route::resource('quizzes', QuizController::class)->only(['index', 'show']);
 Route::get('quizzes/{quiz}/questions', [QuizController::class, 'getQuestions'])->name('quizzes.questions');
+
+/**
+ * User
+ */
+Route::resource('users', UserController::class)->only(['store']);
 
 /**
  * Admin
