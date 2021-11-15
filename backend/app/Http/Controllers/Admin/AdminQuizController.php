@@ -42,6 +42,26 @@ class AdminQuizController extends Controller
      */
      public function deleteAdminQuiz(Quiz $quiz)
     {
-        return $quiz->delete();
+        $quiz->delete();
+        
+        return $quiz;
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+     public function updateAdminQuiz(Quiz $quiz, Request $request)
+    {
+        $attributes = $request->validate([
+            'title' => 'required',
+            'description' => 'required',
+        ]);
+
+        $quiz->update($attributes);
+
+        return $quiz;
     }
 }

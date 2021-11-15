@@ -13,6 +13,7 @@ import AdminCategories from "./Pages/AdminCategories";
 import SignUp from "./Pages/SignUp";
 import SignIn from "./Pages/SignIn";
 import AddCategory from "./Pages/components/AdminCategories/AddCategory";
+import EditCategory from "./Pages/components/AdminCategories/EditCategory";
 
 function App() {
   return (
@@ -39,6 +40,9 @@ function App() {
           </Route>
           <Route path="/admin/add-category">
             <AddCategory />
+          </Route>
+          <Route path="/admin/edit-category/:quizId">
+            <EditCategory />
           </Route>
           <Route path="/signup" exact>
             <SignUp />

@@ -11,3 +11,10 @@ export const saveAdminQuiz = (data: { title: string; description: string }) => {
 export const deleteAdminQuiz = (quizId: number) => {
   return axios.delete(`http://127.0.0.1:8000/api/admin/quizzes/${quizId}`);
 };
+
+export const updateAdminQuiz = (
+  quizId: number,
+  data: { title: string; description: string }
+) => {
+  return axios.patch(`http://127.0.0.1:8000/api/admin/quizzes/${quizId}`, data);
+};
