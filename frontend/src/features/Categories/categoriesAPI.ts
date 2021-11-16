@@ -1,5 +1,5 @@
-const axios = require("axios").default;
+import axios from "../../axios/api";
 
 export const fetchQuiz = () => {
-  return axios.get("http://127.0.0.1:8000/api/quizzes");
+  return axios.get("/api/quizzes");
 };
