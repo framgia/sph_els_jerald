@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Quiz\QuizController;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\Admin\AdminQuizController;
+use App\Http\Controllers\Auth\AuthenticationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,6 +32,7 @@ Route::get('quizzes/{quiz}/questions', [QuizController::class, 'getQuestions'])-
  * User
  */
 Route::resource('users', UserController::class)->only(['store']);
+Route::post('users/signin', [AuthenticationController::class, 'signin'])->name('users.signin');
 
 /**
  * Admin
@@ -39,3 +41,7 @@ Route::get('admin/quizzes', [AdminQuizController::class, 'getAdminQuizzes'])->na
 Route::post('admin/quizzes', [AdminQuizController::class, 'storeAdminQuiz'])->name('admin.quizzes.store');
 Route::delete('admin/quizzes/{quiz}', [AdminQuizController::class, 'deleteAdminQuiz'])->name('admin.quizzes.destroy');
 Route::patch('admin/quizzes/{quiz}', [AdminQuizController::class, 'updateAdminQuiz'])->name('admin.quizzes.update');
+
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::post('users/signout', [AuthenticationController::class, 'signout'])->name('users.signout');
+});
