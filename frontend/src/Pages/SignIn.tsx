@@ -1,14 +1,29 @@
+import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useHistory } from "react-router-dom";
+import { signInUser } from "../features/SignIn/signInAPI";
+import CookieService from "../Services/CookieService";
 
 const SignIn = () => {
+  const history = useHistory();
+  const [error, setError] = useState<string>("");
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data: { email: string; password: string }) => {
-    console.log(data);
+  const onSubmit = async (data: { email: string; password: string }) => {
+    const response = await signInUser(data);
+
+    if (response.status === 401) {
+      setError(response.data.message);
+    } else if (response.status === 201) {
+      setError("");
+      CookieService.set("token", response.data.token, { path: "/" });
+
+      history.push("/dashboard");
+    }
   };
 
   return (
@@ -59,6 +74,7 @@ const SignIn = () => {
             <button className="ui fluid large primary submit button">
               Sign In
             </button>
+            {error && <p className="ui mini message">{error}</p>}
           </form>
         </div>
       </div>

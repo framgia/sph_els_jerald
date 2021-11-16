@@ -1,9 +1,16 @@
 // import { NavLink } from "react-router-dom";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
+import { signOutUser } from "../features/SignOut/signOutAPI";
+import CookieService from "../Services/CookieService";
 
 import classes from "./MainNavigation.module.css";
 
 const MainNavigation = () => {
+  const onLogoutHandler = async () => {
+    CookieService.remove("token");
+    await signOutUser();
+  };
+
   return (
     <header className={classes.header}>
       <div className="ui secondary stackable menu">
@@ -25,9 +32,9 @@ const MainNavigation = () => {
         </NavLink>
 
         <div className="right menu">
-          <a className="ui item" href="/">
+          <Link to="/signin" className="item" onClick={onLogoutHandler}>
             Logout
-          </a>
+          </Link>
         </div>
       </div>
     </header>
