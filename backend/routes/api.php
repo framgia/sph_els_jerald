@@ -23,12 +23,6 @@ use App\Http\Controllers\Auth\AuthenticationController;
 // });
 
 /**
- * Quizzes
- */
-Route::resource('quizzes', QuizController::class)->only(['index', 'show']);
-Route::get('quizzes/{quiz}/questions', [QuizController::class, 'getQuestions'])->name('quizzes.questions');
-
-/**
  * User
  */
 Route::resource('users', UserController::class)->only(['store']);
@@ -43,5 +37,14 @@ Route::delete('admin/quizzes/{quiz}', [AdminQuizController::class, 'deleteAdminQ
 Route::patch('admin/quizzes/{quiz}', [AdminQuizController::class, 'updateAdminQuiz'])->name('admin.quizzes.update');
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
+    /**
+     * Quizzes
+     */
+    Route::resource('quizzes', QuizController::class)->only(['index', 'show']);
+    Route::get('quizzes/{quiz}/questions', [QuizController::class, 'getQuestions'])->name('quizzes.questions');
+
+    /**
+     * User
+     */
     Route::post('users/signout', [AuthenticationController::class, 'signout'])->name('users.signout');
 });

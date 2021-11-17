@@ -1,8 +1,4 @@
-import React, { Fragment } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
-
-// UI
-import Layout from "./UI/Layout";
 
 // Pages
 import Dashboard from "./Pages/Dashboard";
@@ -15,47 +11,32 @@ import SignIn from "./Pages/SignIn";
 import AddCategory from "./Pages/components/AdminCategories/AddCategory";
 import EditCategory from "./Pages/components/AdminCategories/EditCategory";
 
+// Routes
+import UserRoute from "./Routes/UserRoute";
+import AuthRoute from "./Routes/AuthRoute";
+
 function App() {
   return (
-    <Fragment>
-      <Layout>
-        <Switch>
-          <Route path="/" exact>
-            <Redirect to="/dashboard" />
-          </Route>
-          <Route path="/dashboard" exact>
-            <Dashboard />
-          </Route>
-          <Route path="/categories" exact>
-            <Categories />
-          </Route>
-          <Route path="/categories/:quizId" exact>
-            <StartLesson />
-          </Route>
-          <Route path="/admin" exact>
-            <Redirect to="/admin/categories" />
-          </Route>
-          <Route path="/admin/categories">
-            <AdminCategories />
-          </Route>
-          <Route path="/admin/add-category">
-            <AddCategory />
-          </Route>
-          <Route path="/admin/edit-category/:quizId">
-            <EditCategory />
-          </Route>
-          <Route path="/signup" exact>
-            <SignUp />
-          </Route>
-          <Route path="/signin">
-            <SignIn />
-          </Route>
-          <Route path="*">
-            <NotFound />
-          </Route>
-        </Switch>
-      </Layout>
-    </Fragment>
+    <Switch>
+      <AuthRoute exact path="/" component={SignIn} />
+      <AuthRoute exact path="/signup" component={SignUp} />
+      <UserRoute exact path="/dashboard" component={Dashboard} />
+      <UserRoute exact path="/categories" component={Categories} />
+      <UserRoute exact path="/categories/:quizId" component={StartLesson} />
+      <Route path="/admin" exact>
+        <Redirect to="/admin/categories" />
+      </Route>
+      <Route path="/admin/categories">
+        <AdminCategories />
+      </Route>
+      <Route path="/admin/add-category">
+        <AddCategory />
+      </Route>
+      <Route path="/admin/edit-category/:quizId">
+        <EditCategory />
+      </Route>
+      <UserRoute path="*" component={NotFound} />
+    </Switch>
   );
 }
 

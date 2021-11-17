@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { registerUser } from "../features/SignUp/signUpAPI";
 
 const SignUp = () => {
   const history = useHistory();
+  const [error, setError] = useState<string>("");
   const [passwordMatch, setPasswordMatch] = useState(true);
   const {
     register,
@@ -24,15 +25,22 @@ const SignUp = () => {
     setPasswordMatch(passwordMatch);
 
     if (passwordMatch) {
-      await registerUser(data);
+      const response = await registerUser(data);
 
-      history.push("/signin");
+      if (response.status === 422) {
+        setError(response.data.errors.email);
+      } else if (response.status === 201) {
+        setError("");
+
+        history.push("/signin");
+      }
     }
   };
 
   return (
     <div className="ui stackable grid centered">
       <div className="eight wide column">
+        <h1 className="centered">E-learning System</h1>
         <div className="ui stacked segment">
           <h2>Sign Up an Account</h2>
           <form className="ui large form" onSubmit={handleSubmit(onSubmit)}>
@@ -93,6 +101,7 @@ const SignUp = () => {
               {errors.email && (
                 <p className="ui mini message">{errors.email.message}</p>
               )}
+              {error && <p className="ui mini message">{error}</p>}
             </div>
             <div className="field">
               <div className="ui left icon input">
@@ -144,6 +153,9 @@ const SignUp = () => {
             <button className="ui fluid large primary submit button">
               Sign Up
             </button>
+            <Link to="/sigin" className="ui fluid large basic button">
+              Already have an account?
+            </Link>
           </form>
         </div>
       </div>
