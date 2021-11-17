@@ -1,15 +1,13 @@
-import { useHistory, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { signOutUser } from "../features/SignOut/signOutAPI";
 import CookieService from "../Services/CookieService";
 
 import classes from "./MainNavigation.module.css";
 
-const MainNavigation = () => {
-  const history = useHistory();
+const MainNavigationAdmin = () => {
   const onLogoutHandler = async () => {
     await signOutUser();
     CookieService.remove("token");
-    history.push("/");
   };
 
   return (
@@ -17,14 +15,15 @@ const MainNavigation = () => {
       <div className="ui secondary stackable menu">
         <h2 className="item">E-learning System</h2>
 
-        <NavLink to="/dashboard" className="item" activeClassName="active">
-          Dashboard
-        </NavLink>
-        <NavLink to="/categories" className="item" activeClassName="active">
+        <NavLink
+          to="/admin/categories"
+          className="item"
+          activeClassName="active"
+        >
           Categories
         </NavLink>
 
-        <div className="right item menu">
+        <div className="right menu">
           <div className="link item" onClick={onLogoutHandler}>
             Logout
           </div>
@@ -34,4 +33,4 @@ const MainNavigation = () => {
   );
 };
 
-export default MainNavigation;
+export default MainNavigationAdmin;

@@ -1,15 +1,24 @@
 import CookieService from "../Services/CookieService";
 
-const axios = require("axios").default;
-
-const TOKEN = CookieService.get("token");
+import axios from "axios";
 
 const instance = axios.create({
   baseURL: "http://127.0.0.1:8000",
-  headers: {
-    "Content-Type": "application/json",
-    Authorization: `Bearer ${TOKEN}`,
-  },
 });
+
+instance.interceptors.request.use(
+  function (config) {
+    // Do something before request is sent
+    config.headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${CookieService.get("token")}`,
+    };
+    return config;
+  },
+  function (error) {
+    // Do something with request error
+    return Promise.reject(error);
+  }
+);
 
 export default instance;

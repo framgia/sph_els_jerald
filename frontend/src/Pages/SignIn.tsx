@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { signInUser } from "../features/SignIn/signInAPI";
 import CookieService from "../Services/CookieService";
 
@@ -29,6 +29,7 @@ const SignIn = () => {
   return (
     <div className="ui stackable grid centered">
       <div className="eight wide column">
+        <h1 className="centered">E-learning System</h1>
         <div className="ui stacked segment">
           <h2>Sign In</h2>
           <form className="ui large form" onSubmit={handleSubmit(onSubmit)}>
@@ -69,12 +70,15 @@ const SignIn = () => {
               {errors.password && (
                 <p className="ui mini message">{errors.password.message}</p>
               )}
+              {error && <p className="ui mini message">{error}</p>}
             </div>
 
             <button className="ui fluid large primary submit button">
               Sign In
             </button>
-            {error && <p className="ui mini message">{error}</p>}
+            <Link to="/signup" className="ui fluid large basic button">
+              Create an account
+            </Link>
           </form>
         </div>
       </div>

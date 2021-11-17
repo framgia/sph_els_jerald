@@ -1,4 +1,5 @@
 import { Fragment } from "react";
+import { isAuthenticated } from "../auth/userAuth";
 
 import classes from "./Layout.module.css";
 import MainNavigation from "./MainNavigation";
@@ -6,7 +7,7 @@ import MainNavigation from "./MainNavigation";
 const Layout: React.FC = (props) => {
   return (
     <Fragment>
-      <MainNavigation />
+      {isAuthenticated() && <MainNavigation />}
       <main className={classes.main}>{props.children}</main>
       <footer>
         <div className="ui centered vertical footer segment form-page">
