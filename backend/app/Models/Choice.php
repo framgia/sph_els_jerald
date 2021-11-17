@@ -10,6 +10,8 @@ class Choice extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
+
     /**
      * Get the question that owns the choice.
      */

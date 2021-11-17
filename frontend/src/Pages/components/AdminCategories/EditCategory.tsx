@@ -2,7 +2,8 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory, useParams } from "react-router-dom";
 
-import { fetchQuizDetail } from "../../../features/StartLesson/lessonAPI";
+// import { fetchQuizDetail } from "../../../features/StartLesson/lessonAPI";
+import { fetchAdminQuiz } from "../../../features/AdminCategories/adminCategoriesAPI";
 import { updateAdminQuiz } from "../../../features/AdminCategories/adminCategoriesAPI";
 
 const EditCategory = () => {
@@ -17,7 +18,7 @@ const EditCategory = () => {
 
   useEffect(() => {
     (async () => {
-      const quiz = await fetchQuizDetail(Number(quizId));
+      const quiz = await fetchAdminQuiz(Number(quizId));
       reset({
         title: quiz.data[0].title,
         description: quiz.data[0].description,

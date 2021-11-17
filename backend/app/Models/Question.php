@@ -11,6 +11,8 @@ class Question extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
+
     /**
      * Get the quiz that owns the question.
      */

@@ -32,9 +32,11 @@ Route::post('users/signin', [AuthenticationController::class, 'signin'])->name('
  * Admin
  */
 Route::get('admin/quizzes', [AdminQuizController::class, 'getAdminQuizzes'])->name('admin.quizzes.index');
+Route::get('admin/quizzes/{quiz}', [AdminQuizController::class, 'showAdminQuiz'])->name('admin.quizzes.show');
 Route::post('admin/quizzes', [AdminQuizController::class, 'storeAdminQuiz'])->name('admin.quizzes.store');
 Route::delete('admin/quizzes/{quiz}', [AdminQuizController::class, 'deleteAdminQuiz'])->name('admin.quizzes.destroy');
 Route::patch('admin/quizzes/{quiz}', [AdminQuizController::class, 'updateAdminQuiz'])->name('admin.quizzes.update');
+Route::post('admin/quizzes/{quiz}/questions', [AdminQuizController::class, 'storeAdminQuizQuestion'])->name('admin.quizzes.questions.store');
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
     /**

@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Quiz;
+use App\Models\Choice;
+use App\Models\Question;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 
 class AdminQuizController extends Controller
@@ -63,5 +66,57 @@ class AdminQuizController extends Controller
         $quiz->update($attributes);
 
         return $quiz;
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+     public function showAdminQuiz(Quiz $quiz)
+    {
+        return Quiz::find($quiz);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+     public function storeAdminQuizQuestion(Request $request, Quiz $quiz)
+    {
+
+        $attributes = $request->validate([
+            'word' => 'required',
+            'choices' => 'required|array|min:4',
+            'choices.*.value' => 'required|string',
+            'choices.*.is_correct' => 'required|boolean',
+        ]);
+
+        $question = Question::create([
+            'word' => $attributes['word'],
+            'quiz_id' => $quiz->id,
+        ]);
+
+        $choices = array();
+
+        foreach ($attributes['choices'] as $choice) {
+            $data = Choice::create([
+                'question_id' => $question->id, 
+                'value' => $choice['value'],
+                'is_correct' => $choice['is_correct'],
+            ]);
+
+            array_push($choices, $data);
+        }
+
+        $response = [
+            'question' => $question,
+            'choices' => $choices,
+        ];
+
+        return response($response, 201);
     }
 }
