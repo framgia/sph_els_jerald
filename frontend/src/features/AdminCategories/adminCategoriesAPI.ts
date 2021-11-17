@@ -4,6 +4,10 @@ export const fetchAdminQuizzes = (page: number) => {
   return axios.get(`/api/admin/quizzes?page=${page}`);
 };
 
+export const fetchAdminQuiz = (quizId: number) => {
+  return axios.get(`/api/admin/quizzes/${quizId}`);
+};
+
 export const saveAdminQuiz = (data: { title: string; description: string }) => {
   return axios.post("/api/admin/quizzes", data);
 };

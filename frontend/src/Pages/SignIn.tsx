@@ -16,9 +16,9 @@ const SignIn = () => {
   const onSubmit = async (data: { email: string; password: string }) => {
     const response = await signInUser(data);
 
-    if (response.status === 401) {
+    if (response?.status === 401) {
       setError(response.data.message);
-    } else if (response.status === 201) {
+    } else if (response?.status === 201) {
       setError("");
       CookieService.set("token", response.data.token, { path: "/" });
 
