@@ -119,4 +119,16 @@ class AdminQuizController extends Controller
 
         return response($response, 201);
     }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+     public function showAdminQuizQuestions(Quiz $quiz)
+    {
+        // return $quiz->questions;
+        return Question::where('quiz_id', $quiz->id)->simplePaginate(5);
+    }
+    
 }
