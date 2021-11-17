@@ -119,4 +119,28 @@ class AdminQuizController extends Controller
 
         return response($response, 201);
     }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+     public function showAdminQuizQuestions(Quiz $quiz)
+    {
+        // return $quiz->questions;
+        return Question::where('quiz_id', $quiz->id)->simplePaginate(5);
+    }
+    
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+     public function deleteAdminQuizQuestion(Question $question)
+    {
+        $question->delete();
+        
+        return $question;
+    }
 }
