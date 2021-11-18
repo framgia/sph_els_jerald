@@ -127,7 +127,6 @@ class AdminQuizController extends Controller
      */
      public function showAdminQuizQuestions(Quiz $quiz)
     {
-        // return $quiz->questions;
         return Question::where('quiz_id', $quiz->id)->simplePaginate(5);
     }
     
@@ -142,5 +141,15 @@ class AdminQuizController extends Controller
         $question->delete();
         
         return $question;
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+     public function showAdminQuizQuestion(Question $question)
+    {
+        return $question->load('choices');
     }
 }
