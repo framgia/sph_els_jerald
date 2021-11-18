@@ -46,7 +46,9 @@ const AdminCategoriesWords = () => {
                 <h4 className="ui header">{item.word}</h4>
               </td>
               <td className="single line">
-                <Link to="/">
+                <Link
+                  to={`/admin/categories/${Number(quizId)}/words/${item.id}`}
+                >
                   <button className="ui button">Edit</button>
                 </Link>
                 <button
