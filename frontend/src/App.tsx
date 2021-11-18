@@ -5,11 +5,13 @@ import Dashboard from "./Pages/Dashboard";
 import Categories from "./Pages/Categories";
 import NotFound from "./Pages/NotFound";
 import StartLesson from "./Pages/StartLesson";
-import AdminCategories from "./Pages/AdminCategories";
 import SignUp from "./Pages/SignUp";
 import SignIn from "./Pages/SignIn";
 import AddCategory from "./Pages/components/AdminCategories/AddCategory";
 import EditCategory from "./Pages/components/AdminCategories/EditCategory";
+import AdminCategories from "./Pages/AdminCategories";
+import AdminCategoriesWords from "./Pages/components/AdminCategories/AdminCategoriesWords";
+import AddCategoryWords from "./Pages/components/AdminCategories/AddCategoryWords";
 
 // Routes
 import UserRoute from "./Routes/UserRoute";
@@ -26,8 +28,14 @@ function App() {
       <Route path="/admin" exact>
         <Redirect to="/admin/categories" />
       </Route>
-      <Route path="/admin/categories">
+      <Route exact path="/admin/categories">
         <AdminCategories />
+      </Route>
+      <Route exact path="/admin/categories/:quizId">
+        <AdminCategoriesWords />
+      </Route>
+      <Route exact path="/admin/categories/:quizId/words">
+        <AddCategoryWords />
       </Route>
       <Route path="/admin/add-category">
         <AddCategory />

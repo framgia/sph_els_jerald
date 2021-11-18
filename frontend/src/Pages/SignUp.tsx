@@ -27,9 +27,9 @@ const SignUp = () => {
     if (passwordMatch) {
       const response = await registerUser(data);
 
-      if (response.status === 422) {
+      if (response?.status === 422) {
         setError(response.data.errors.email);
-      } else if (response.status === 201) {
+      } else if (response?.status === 201) {
         setError("");
 
         history.push("/signin");

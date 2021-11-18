@@ -1,29 +1,24 @@
 import { Fragment, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { useAppSelector, useAppDispatch } from "../app/hooks";
-import { deleteAdminQuiz } from "../features/AdminCategories/adminCategoriesAPI";
+import { Link, useParams } from "react-router-dom";
+import { useAppSelector, useAppDispatch } from "../../../app/hooks";
 
 import {
-  selectAdminQuizzes,
-  fetchAdminQuizAsync,
-} from "../features/AdminCategories/adminCategoriesSlice";
-import { Quiz } from "../Types/Quiz";
+  selectAdminQuizQuestions,
+  fetchAdminQuizQuestionsAsync,
+} from "../../../features/AdminCategories/adminCategoriesWordsSlice";
 
-const AdminCategories = () => {
+const AdminCategoriesWords = () => {
   const [page, setPage] = useState(1);
+  const { quizId } = useParams<{ quizId: string }>();
 
-  const data = useAppSelector(selectAdminQuizzes);
+  const data = useAppSelector(selectAdminQuizQuestions);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(fetchAdminQuizAsync(page));
-  }, [dispatch, page]);
-
-  const onDeleteHandler = async (quizId: number) => {
-    await deleteAdminQuiz(quizId);
-
-    dispatch(fetchAdminQuizAsync(page));
-  };
+    dispatch(
+      fetchAdminQuizQuestionsAsync({ quizId: Number(quizId), page: page })
+    );
+  }, [dispatch, page, quizId]);
 
   return (
     <Fragment>
@@ -31,33 +26,21 @@ const AdminCategories = () => {
       <table className="ui celled padded table stackable">
         <thead>
           <tr>
-            <th>Title</th>
-            <th>Description</th>
+            <th>Word</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
-          {data.quizzes.data.map((item: Quiz) => (
+          {data.quizzes.data.map((item) => (
             <tr key={item.id}>
               <td>
-                <h4 className="ui header">
-                  <Link to="/">{item.title}</Link>
-                </h4>
+                <h4 className="ui header">{item.word}</h4>
               </td>
-              <td>{item.description}</td>
               <td className="single line">
-                <Link to={`/admin/categories/${item.id}`}>
-                  <button className="ui button primary">View Words</button>
-                </Link>
-                <Link to={`/admin/edit-category/${item.id}`}>
+                <Link to="/">
                   <button className="ui button">Edit</button>
                 </Link>
-                <button
-                  className="ui red button"
-                  onClick={() => onDeleteHandler(item.id)}
-                >
-                  Delete
-                </button>
+                <button className="ui red button">Delete</button>
               </td>
             </tr>
           ))}
@@ -65,8 +48,8 @@ const AdminCategories = () => {
         <tfoot>
           <tr>
             <th colSpan={5}>
-              <Link to={"/admin/add-category"}>
-                <button className="ui button primary">Add Category</button>
+              <Link to={`/admin/categories/${Number(quizId)}/words`}>
+                <button className="ui button primary">Add Word</button>
               </Link>
               {(data.quizzes.next_page_url || data.quizzes.prev_page_url) && (
                 <div className="ui right floated pagination menu">
@@ -97,4 +80,4 @@ const AdminCategories = () => {
   );
 };
 
-export default AdminCategories;
+export default AdminCategoriesWords;
