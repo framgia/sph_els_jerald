@@ -150,17 +150,6 @@ class AdminQuizController extends Controller
      */
      public function showAdminQuizQuestion(Question $question)
     {
-        $choices = Choice::where('question_id', $question->id)->get();
-
-        $question = [
-            'id' => $question->id,
-            'quiz_id' => $question->quiz_id,
-            'word' => $question->word,
-            'created_at' => $question->created_at,
-            'updated_at' => $question->updated_at,
-            'choices' => $choices,
-        ];
-
-        return $question;
+        return $question->load('choices');
     }
 }
