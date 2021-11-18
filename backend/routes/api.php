@@ -39,6 +39,7 @@ Route::patch('admin/quizzes/{quiz}', [AdminQuizController::class, 'updateAdminQu
 Route::get('admin/quizzes/{quiz}/questions', [AdminQuizController::class, 'showAdminQuizQuestions'])->name('admin.quizzes.questions.index');
 Route::get('admin/quizzes/questions/{question}', [AdminQuizController::class, 'showAdminQuizQuestion'])->name('admin.quizzes.questions.show');
 Route::post('admin/quizzes/{quiz}/questions', [AdminQuizController::class, 'storeAdminQuizQuestion'])->name('admin.quizzes.questions.store');
+Route::patch('admin/quizzes/questions/{question}', [AdminQuizController::class, 'updateAdminQuizQuestion'])->name('admin.quizzes.questions.update');
 Route::delete('admin/quizzes/questions/{question}', [AdminQuizController::class, 'deleteAdminQuizQuestion'])->name('admin.quizzes.questions.destroy');
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
