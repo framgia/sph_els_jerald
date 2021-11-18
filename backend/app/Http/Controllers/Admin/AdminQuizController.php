@@ -131,4 +131,16 @@ class AdminQuizController extends Controller
         return Question::where('quiz_id', $quiz->id)->simplePaginate(5);
     }
     
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+     public function deleteAdminQuizQuestion(Question $question)
+    {
+        $question->delete();
+        
+        return $question;
+    }
 }
