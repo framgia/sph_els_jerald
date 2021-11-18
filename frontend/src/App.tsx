@@ -12,6 +12,7 @@ import EditCategory from "./Pages/components/AdminCategories/EditCategory";
 import AdminCategories from "./Pages/AdminCategories";
 import AdminCategoriesWords from "./Pages/components/AdminCategories/AdminCategoriesWords";
 import AddCategoryWords from "./Pages/components/AdminCategories/AddCategoryWords";
+import EditCategoryWords from "./Pages/components/AdminCategories/EditCategoryWords";
 
 // Routes
 import UserRoute from "./Routes/UserRoute";
@@ -36,6 +37,9 @@ function App() {
       </Route>
       <Route exact path="/admin/categories/:quizId/words">
         <AddCategoryWords />
+      </Route>
+      <Route exact path="/admin/categories/:quizId/words/:questionId">
+        <EditCategoryWords />
       </Route>
       <Route path="/admin/add-category">
         <AddCategory />
