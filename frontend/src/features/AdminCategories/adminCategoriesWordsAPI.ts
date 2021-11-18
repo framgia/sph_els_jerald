@@ -10,3 +10,7 @@ export const saveAdminQuizQuestions = (
 ) => {
   return axios.post(`/api/admin/quizzes/${quizId}/questions`, data);
 };
+
+export const deleteAdminQuizQuestion = (questionId: number) => {
+  return axios.delete(`/api/admin/quizzes/questions/${questionId}`);
+};

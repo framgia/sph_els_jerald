@@ -1,6 +1,7 @@
 import { Fragment, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "../../../app/hooks";
+import { deleteAdminQuizQuestion } from "../../../features/AdminCategories/adminCategoriesWordsAPI";
 
 import {
   selectAdminQuizQuestions,
@@ -19,6 +20,14 @@ const AdminCategoriesWords = () => {
       fetchAdminQuizQuestionsAsync({ quizId: Number(quizId), page: page })
     );
   }, [dispatch, page, quizId]);
+
+  const onDeleteHandler = async (questionId: number) => {
+    await deleteAdminQuizQuestion(questionId);
+
+    dispatch(
+      fetchAdminQuizQuestionsAsync({ quizId: Number(quizId), page: page })
+    );
+  };
 
   return (
     <Fragment>
@@ -40,7 +49,12 @@ const AdminCategoriesWords = () => {
                 <Link to="/">
                   <button className="ui button">Edit</button>
                 </Link>
-                <button className="ui red button">Delete</button>
+                <button
+                  className="ui red button"
+                  onClick={() => onDeleteHandler(item.id)}
+                >
+                  Delete
+                </button>
               </td>
             </tr>
           ))}
