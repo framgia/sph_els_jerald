@@ -8,9 +8,9 @@ use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 
-class AuthenticationController extends Controller
+class AdminAuthenticationController extends Controller
 {
-    public function signin(Request $request)
+    public function signinAdmin(Request $request)
     {
         $attributes = $request->validate([
             'email' => 'required|email',
@@ -18,7 +18,7 @@ class AuthenticationController extends Controller
         ]);
 
         $user = User::where('email', $attributes['email'])
-                    ->where('isAdmin', 0)
+                    ->where('isAdmin', 1)
                     ->first();
 
         if (!$user || !Hash::check($attributes['password'], $user->password)) {
@@ -27,19 +27,19 @@ class AuthenticationController extends Controller
             ], 401);
         }
 
-        $token = $user->createToken('token')->plainTextToken;
+        $adminToken = $user->createToken('adminToken')->plainTextToken;
 
         $response = [
             'user' => $user,
-            'token' => $token
+            'adminToken' => $adminToken
         ];
 
         return response($response, 201);
     }
 
-    public function signout(Request $request)
+    public function signoutAdmin(Request $request)
     {
-        if (auth()->user()->isAdmin) {
+        if (!auth()->user()->isAdmin) {
             return response()->json(['Message' => 'Permission denied'], 403);
         }
 
