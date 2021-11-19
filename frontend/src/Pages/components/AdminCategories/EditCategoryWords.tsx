@@ -1,7 +1,10 @@
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory, useParams } from "react-router-dom";
-import { fetchAdminQuizQuestion } from "../../../features/AdminCategories/adminCategoriesWordsAPI";
+import {
+  fetchAdminQuizQuestion,
+  updateAdminQuizQuestion,
+} from "../../../features/AdminCategories/adminCategoriesWordsAPI";
 
 const EditCategoryWords = () => {
   const { quizId, questionId } =
@@ -21,18 +24,22 @@ const EditCategoryWords = () => {
         word: question.data.word,
         choices: [
           {
+            id: question.data.choices[0].id,
             value: question.data.choices[0].value,
             is_correct: question.data.choices[0].is_correct,
           },
           {
+            id: question.data.choices[1].id,
             value: question.data.choices[1].value,
             is_correct: question.data.choices[1].is_correct,
           },
           {
+            id: question.data.choices[2].id,
             value: question.data.choices[2].value,
             is_correct: question.data.choices[2].is_correct,
           },
           {
+            id: question.data.choices[3].id,
             value: question.data.choices[3].value,
             is_correct: question.data.choices[3].is_correct,
           },
@@ -43,9 +50,9 @@ const EditCategoryWords = () => {
 
   const onSubmit = async (data: {
     word: string;
-    choices: { value: string; is_correct: boolean }[];
+    choices: { id: number; value: string; is_correct: boolean }[];
   }) => {
-    // await saveAdminQuizQuestions(data, Number(quizId));
+    await updateAdminQuizQuestion(Number(questionId), data);
     history.push(`/admin/categories/${Number(quizId)}`);
   };
 

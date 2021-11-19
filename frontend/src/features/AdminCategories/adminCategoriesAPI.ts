@@ -20,5 +20,5 @@ export const updateAdminQuiz = (
   quizId: number,
   data: { title: string; description: string }
 ) => {
-  return axios.patch(`http://127.0.0.1:8000/api/admin/quizzes/${quizId}`, data);
+  return axios.patch(`/api/admin/quizzes/${quizId}`, data);
 };

@@ -152,4 +152,48 @@ class AdminQuizController extends Controller
     {
         return $question->load('choices');
     }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+     public function updateAdminQuizQuestion(Question $question, Request $request)
+    {
+        $attributes = $request->validate([
+            'word' => 'required',
+            'choices' => 'required|array|min:4',
+            'choices.*.value' => 'required|string',
+            'choices.*.is_correct' => 'required|boolean',
+        ]);
+
+        $question->update([
+            'word' => $attributes['word'],
+        ]);
+
+        $choices = array();
+
+        foreach ($attributes['choices'] as $choice) {
+            Choice::where('id', $choice['id'])->update([
+                'value' => $choice['value'],
+                'is_correct' => $choice['is_correct'],
+            ]);
+
+            $choiceData = Choice::find($choice['id']);
+
+            array_push($choices, $choiceData);
+        }
+
+        $response = [
+            'id' => $question->id,
+            'quiz_id' => $question->quiz_id,
+            'word' => $question->word,
+            'created_at' => $question->created_at,
+            'updated_at' => $question->updated_at,
+            'choices' => $choices,
+        ];
+
+        return $response;
+    }
 }

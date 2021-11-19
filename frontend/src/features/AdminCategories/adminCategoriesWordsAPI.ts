@@ -18,3 +18,13 @@ export const saveAdminQuizQuestions = (
 export const deleteAdminQuizQuestion = (questionId: number) => {
   return axios.delete(`/api/admin/quizzes/questions/${questionId}`);
 };
+
+export const updateAdminQuizQuestion = (
+  questionId: number,
+  data: {
+    word: string;
+    choices: { id: number; value: string; is_correct: boolean }[];
+  }
+) => {
+  return axios.patch(`/api/admin/quizzes/questions/${questionId}`, data);
+};
