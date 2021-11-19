@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link, useHistory } from "react-router-dom";
-import { signInUser } from "../features/SignIn/signInAPI";
+import { useHistory } from "react-router-dom";
+import { signInAdmin } from "../features/AdminSignIn/adminSignInAPI";
 import CookieService from "../Services/CookieService";
-import classes from "./SignIn.module.css";
+import classes from "./AdminSignIn.module.css";
 
-const SignIn = () => {
+const AdminSignIn = () => {
   const history = useHistory();
   const [error, setError] = useState<string>("");
   const {
@@ -15,15 +15,16 @@ const SignIn = () => {
   } = useForm();
 
   const onSubmit = async (data: { email: string; password: string }) => {
-    const response = await signInUser(data);
+    console.log(data);
+    const response = await signInAdmin(data);
 
     if (response?.status === 401) {
       setError(response.data.message);
     } else if (response?.status === 201) {
       setError("");
-      CookieService.set("token", response.data.token, { path: "/" });
+      CookieService.set("adminToken", response.data.adminToken, { path: "/" });
 
-      history.push("/dashboard");
+      history.push("/admin");
     }
   };
 
@@ -33,6 +34,10 @@ const SignIn = () => {
     >
       <div className="eight wide tablet column six wide computer column">
         <h1 className="centered">E-learning System</h1>
+        <div className="ui label">
+          E-learning System
+          <div className="detail">Administrator</div>
+        </div>
         <div className="ui stacked segment">
           <h2>Sign In</h2>
           <form className="ui large form" onSubmit={handleSubmit(onSubmit)}>
@@ -79,9 +84,6 @@ const SignIn = () => {
             <button className="ui fluid large primary submit button">
               Sign In
             </button>
-            <Link to="/signup" className="ui fluid large basic button">
-              Create an account
-            </Link>
           </form>
         </div>
       </div>
@@ -89,4 +91,4 @@ const SignIn = () => {
   );
 };
 
-export default SignIn;
+export default AdminSignIn;

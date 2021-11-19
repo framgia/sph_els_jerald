@@ -1,4 +1,4 @@
-import { Route, Switch, Redirect } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 
 // Pages
 import Dashboard from "./Pages/Dashboard";
@@ -13,10 +13,13 @@ import AdminCategories from "./Pages/AdminCategories";
 import AdminCategoriesWords from "./Pages/components/AdminCategories/AdminCategoriesWords";
 import AddCategoryWords from "./Pages/components/AdminCategories/AddCategoryWords";
 import EditCategoryWords from "./Pages/components/AdminCategories/EditCategoryWords";
+import AdminSignIn from "./Pages/AdminSignIn";
 
 // Routes
 import UserRoute from "./Routes/UserRoute";
 import AuthRoute from "./Routes/AuthRoute";
+import AdminRoute from "./Routes/AdminRoute";
+import AdminAuthRoute from "./Routes/AdminAuthRoute";
 
 function App() {
   return (
@@ -26,12 +29,8 @@ function App() {
       <UserRoute exact path="/dashboard" component={Dashboard} />
       <UserRoute exact path="/categories" component={Categories} />
       <UserRoute exact path="/categories/:quizId" component={StartLesson} />
-      <Route path="/admin" exact>
-        <Redirect to="/admin/categories" />
-      </Route>
-      <Route exact path="/admin/categories">
-        <AdminCategories />
-      </Route>
+      <AdminAuthRoute exact path="/admin" component={AdminSignIn} />
+      <AdminRoute exact path="/admin/categories" component={AdminCategories} />
       <Route exact path="/admin/categories/:quizId">
         <AdminCategoriesWords />
       </Route>

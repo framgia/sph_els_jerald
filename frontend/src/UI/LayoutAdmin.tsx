@@ -1,12 +1,12 @@
 import { Fragment } from "react";
 
-import classes from "./Layout.module.css";
-import MainNavigation from "./MainNavigation";
+import classes from "./LayoutAdmin.module.css";
+import MainNavigationAdmin from "./MainNavigationAdmin";
 
-const Layout: React.FC = (props) => {
+const LayoutAdmin: React.FC = (props) => {
   return (
     <Fragment>
-      <MainNavigation />
+      <MainNavigationAdmin />
       <main className={classes.main}>{props.children}</main>
       <footer>
         <div className="ui centered vertical footer segment form-page">
@@ -19,4 +19,4 @@ const Layout: React.FC = (props) => {
   );
 };
 
-export default Layout;
+export default LayoutAdmin;

@@ -1,4 +1,4 @@
-import axios from "../../axios/api";
+import axios from "../../axios/apiAdmin";
 
 export const fetchAdminQuizzes = (page: number) => {
   return axios.get(`/api/admin/quizzes?page=${page}`);
