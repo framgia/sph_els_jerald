@@ -1,4 +1,4 @@
-import { Route, Switch } from "react-router-dom";
+import { Switch } from "react-router-dom";
 
 // Pages
 import Dashboard from "./Pages/Dashboard";
@@ -31,21 +31,27 @@ function App() {
       <UserRoute exact path="/categories/:quizId" component={StartLesson} />
       <AdminAuthRoute exact path="/admin" component={AdminSignIn} />
       <AdminRoute exact path="/admin/categories" component={AdminCategories} />
-      <Route exact path="/admin/categories/:quizId">
-        <AdminCategoriesWords />
-      </Route>
-      <Route exact path="/admin/categories/:quizId/words">
-        <AddCategoryWords />
-      </Route>
-      <Route exact path="/admin/categories/:quizId/words/:questionId">
-        <EditCategoryWords />
-      </Route>
-      <Route path="/admin/add-category">
-        <AddCategory />
-      </Route>
-      <Route path="/admin/edit-category/:quizId">
-        <EditCategory />
-      </Route>
+      <AdminRoute
+        exact
+        path="/admin/categories/:quizId"
+        component={AdminCategoriesWords}
+      />
+      <AdminRoute
+        exact
+        path="/admin/categories/:quizId/words"
+        component={AddCategoryWords}
+      />
+      <AdminRoute
+        exact
+        path="/admin/categories/:quizId/words/:questionId"
+        component={EditCategoryWords}
+      />
+      <AdminRoute exact path="/admin/add-category" component={AddCategory} />
+      <AdminRoute
+        exact
+        path="/admin/edit-category/:quizId"
+        component={EditCategory}
+      />
       <UserRoute path="*" component={NotFound} />
     </Switch>
   );
