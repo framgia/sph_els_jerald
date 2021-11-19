@@ -14,6 +14,7 @@ import AdminCategoriesWords from "./Pages/components/AdminCategories/AdminCatego
 import AddCategoryWords from "./Pages/components/AdminCategories/AddCategoryWords";
 import EditCategoryWords from "./Pages/components/AdminCategories/EditCategoryWords";
 import AdminSignIn from "./Pages/AdminSignIn";
+import Profile from "./Pages/Profile";
 
 // Routes
 import UserRoute from "./Routes/UserRoute";
@@ -29,6 +30,7 @@ function App() {
       <UserRoute exact path="/dashboard" component={Dashboard} />
       <UserRoute exact path="/categories" component={Categories} />
       <UserRoute exact path="/categories/:quizId" component={StartLesson} />
+      <UserRoute exact path="/profile" component={Profile} />
       <AdminAuthRoute exact path="/admin" component={AdminSignIn} />
       <AdminRoute exact path="/admin/categories" component={AdminCategories} />
       <AdminRoute
