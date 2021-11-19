@@ -15,7 +15,6 @@ const AdminSignIn = () => {
   } = useForm();
 
   const onSubmit = async (data: { email: string; password: string }) => {
-    console.log(data);
     const response = await signInAdmin(data);
 
     if (response?.status === 401) {
@@ -24,7 +23,7 @@ const AdminSignIn = () => {
       setError("");
       CookieService.set("adminToken", response.data.adminToken, { path: "/" });
 
-      history.push("/admin");
+      history.push("/admin/categories");
     }
   };
 

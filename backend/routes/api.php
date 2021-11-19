@@ -32,16 +32,6 @@ Route::post('users/signin', [AuthenticationController::class, 'signin'])->name('
 /**
  * Admin
  */
-Route::get('admin/quizzes', [AdminQuizController::class, 'getAdminQuizzes'])->name('admin.quizzes.index');
-Route::get('admin/quizzes/{quiz}', [AdminQuizController::class, 'showAdminQuiz'])->name('admin.quizzes.show');
-Route::post('admin/quizzes', [AdminQuizController::class, 'storeAdminQuiz'])->name('admin.quizzes.store');
-Route::delete('admin/quizzes/{quiz}', [AdminQuizController::class, 'deleteAdminQuiz'])->name('admin.quizzes.destroy');
-Route::patch('admin/quizzes/{quiz}', [AdminQuizController::class, 'updateAdminQuiz'])->name('admin.quizzes.update');
-Route::get('admin/quizzes/{quiz}/questions', [AdminQuizController::class, 'showAdminQuizQuestions'])->name('admin.quizzes.questions.index');
-Route::get('admin/quizzes/questions/{question}', [AdminQuizController::class, 'showAdminQuizQuestion'])->name('admin.quizzes.questions.show');
-Route::post('admin/quizzes/{quiz}/questions', [AdminQuizController::class, 'storeAdminQuizQuestion'])->name('admin.quizzes.questions.store');
-Route::patch('admin/quizzes/questions/{question}', [AdminQuizController::class, 'updateAdminQuizQuestion'])->name('admin.quizzes.questions.update');
-Route::delete('admin/quizzes/questions/{question}', [AdminQuizController::class, 'deleteAdminQuizQuestion'])->name('admin.quizzes.questions.destroy');
 Route::post('admin/signin', [AdminAuthenticationController::class, 'signinAdmin'])->name('admin.signin');
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
@@ -55,5 +45,15 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     /**
      * Admin
      */
+    Route::get('admin/quizzes', [AdminQuizController::class, 'getAdminQuizzes'])->name('admin.quizzes.index');
+    Route::get('admin/quizzes/{quiz}', [AdminQuizController::class, 'showAdminQuiz'])->name('admin.quizzes.show');
+    Route::post('admin/quizzes', [AdminQuizController::class, 'storeAdminQuiz'])->name('admin.quizzes.store');
+    Route::delete('admin/quizzes/{quiz}', [AdminQuizController::class, 'deleteAdminQuiz'])->name('admin.quizzes.destroy');
+    Route::patch('admin/quizzes/{quiz}', [AdminQuizController::class, 'updateAdminQuiz'])->name('admin.quizzes.update');
+    Route::get('admin/quizzes/{quiz}/questions', [AdminQuizController::class, 'showAdminQuizQuestions'])->name('admin.quizzes.questions.index');
+    Route::get('admin/quizzes/questions/{question}', [AdminQuizController::class, 'showAdminQuizQuestion'])->name('admin.quizzes.questions.show');
+    Route::post('admin/quizzes/{quiz}/questions', [AdminQuizController::class, 'storeAdminQuizQuestion'])->name('admin.quizzes.questions.store');
+    Route::patch('admin/quizzes/questions/{question}', [AdminQuizController::class, 'updateAdminQuizQuestion'])->name('admin.quizzes.questions.update');
+    Route::delete('admin/quizzes/questions/{question}', [AdminQuizController::class, 'deleteAdminQuizQuestion'])->name('admin.quizzes.questions.destroy');
     Route::post('admin/signout', [AdminAuthenticationController::class, 'signoutAdmin'])->name('admin.signout');
 });
