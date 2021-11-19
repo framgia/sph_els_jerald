@@ -1,14 +1,14 @@
 import React, { Fragment } from "react";
 import { Route, Redirect } from "react-router-dom";
-import { isAuthenticated } from "../auth/userAuth";
+import { isAdminAuthenticated } from "../auth/adminAuth";
 
-const AuthRoute: React.FC<any> = ({ component: Component, ...rest }) => {
+const AdminAuthRoute: React.FC<any> = ({ component: Component, ...rest }) => {
   return (
     <Route
       {...rest}
       render={() =>
-        isAuthenticated() ? (
-          <Redirect to="/dashboard" />
+        isAdminAuthenticated() ? (
+          <Redirect to="/admin/categories" />
         ) : (
           <Fragment>
             <Component {...rest} />
@@ -19,4 +19,4 @@ const AuthRoute: React.FC<any> = ({ component: Component, ...rest }) => {
   );
 };
 
-export default AuthRoute;
+export default AdminAuthRoute;

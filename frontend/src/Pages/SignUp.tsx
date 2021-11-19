@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { registerUser } from "../features/SignUp/signUpAPI";
+import classes from "./SignUp.module.css";
 
 const SignUp = () => {
   const history = useHistory();
@@ -38,8 +39,10 @@ const SignUp = () => {
   };
 
   return (
-    <div className="ui stackable grid centered">
-      <div className="eight wide column">
+    <div
+      className={`ui stackable grid center aligned middle aligned ${classes.container}`}
+    >
+      <div className="eight wide tablet column six wide computer column">
         <h1 className="centered">E-learning System</h1>
         <div className="ui stacked segment">
           <h2>Sign Up an Account</h2>

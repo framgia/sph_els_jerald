@@ -1,19 +1,23 @@
-import { NavLink } from "react-router-dom";
-import { signOutUser } from "../features/SignOut/signOutAPI";
+import { useHistory, NavLink } from "react-router-dom";
+import { signOutAdmin } from "../features/AdminSignOut/adminSignOutAPI";
 import CookieService from "../Services/CookieService";
 
-import classes from "./MainNavigation.module.css";
+import classes from "./MainNavigationAdmin.module.css";
 
 const MainNavigationAdmin = () => {
+  const history = useHistory();
   const onLogoutHandler = async () => {
-    await signOutUser();
-    CookieService.remove("token");
+    await signOutAdmin();
+    CookieService.remove("adminToken");
+    history.push("/admin");
   };
 
   return (
     <header className={classes.header}>
       <div className="ui secondary stackable menu">
-        <h2 className="item">E-learning System</h2>
+        <h2 className="item">
+          E-learning System <div className="ui red horizontal label">Admin</div>
+        </h2>
 
         <NavLink
           to="/admin/categories"
