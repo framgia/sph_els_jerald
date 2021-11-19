@@ -82,10 +82,6 @@ const SignIn = () => {
             <Link to="/signup" className="ui fluid large basic button">
               Create an account
             </Link>
-            <p className="ui fluid large centered">or</p>
-            <Link to="/admin" className="ui fluid large button">
-              Are you an administrator?
-            </Link>
           </form>
         </div>
       </div>
