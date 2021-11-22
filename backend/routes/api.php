@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Quiz\QuizController;
 use App\Http\Controllers\User\UserController;
+use App\Http\Controllers\Answer\AnswerController;
 use App\Http\Controllers\Admin\AdminQuizController;
 use App\Http\Controllers\Auth\AuthenticationController;
 use App\Http\Controllers\Auth\AdminAuthenticationController;
@@ -41,6 +42,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::resource('quizzes', QuizController::class)->only(['index', 'show']);
     Route::get('quizzes/{quiz}/questions', [QuizController::class, 'getQuestions'])->name('quizzes.questions');
     Route::post('users/signout', [AuthenticationController::class, 'signout'])->name('users.signout');
+    Route::resource('answers', AnswerController::class)->only(['store']);
 
     /**
      * Admin

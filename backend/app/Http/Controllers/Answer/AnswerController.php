@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\Quiz;
+namespace App\Http\Controllers\Answer;
 
-use App\Models\Quiz;
+use App\Models\Answer;
 use App\Models\QuizLog;
-use App\Models\Question;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 
-class QuizController extends Controller
+class AnswerController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,13 +17,7 @@ class QuizController extends Controller
      */
     public function index()
     {
-        $quizLogs = QuizLog::where('user_id', auth()->user()->id)->pluck('quiz_id');
-  
-        if ($quizLogs) {
-            return Quiz::whereNotIn('id', $quizLogs)->get();
-        }
-
-        return Quiz::all();
+        //
     }
 
     /**
@@ -44,7 +38,29 @@ class QuizController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $quizLog = QuizLog::create([
+            'user_id' => auth()->user()->id,
+            'quiz_id' => $request->quiz_id,
+        ]);
+
+        $answers = array();
+
+        foreach ($request->answers as $answer) {
+            $answer = Answer::create([
+                'user_id' => auth()->user()->id,
+                'quiz_log_id' => $quizLog->id,
+                'choice_id' => $answer['choice_id'],
+            ]);
+
+            array_push($answers, $answer);
+        }
+
+        $response = [
+            'quiz_log' => $quizLog,
+            'answers' => $answers,
+        ];
+
+        return $response;
     }
 
     /**
@@ -53,9 +69,9 @@ class QuizController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Quiz $quiz)
+    public function show($id)
     {
-        return Quiz::find($quiz);
+        //
     }
 
     /**
@@ -90,15 +106,5 @@ class QuizController extends Controller
     public function destroy($id)
     {
         //
-    }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function getQuestions(Quiz $quiz)
-    {
-        return $quiz->questions()->with('choices')->get();
     }
 }

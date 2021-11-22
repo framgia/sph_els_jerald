@@ -67,7 +67,7 @@ const Lesson = () => {
       )}
 
       {showScore ? (
-        <div className="ui container segment">
+        <div className="ui container piled segment">
           <div className="ui grid">
             <div className="sixteen wide column centered">
               {data.quiz.map((item) => (
@@ -91,7 +91,7 @@ const Lesson = () => {
       ) : (
         <Fragment>
           {data.status === "idle" && data.quiz[0] && data.questions[0] && (
-            <div className="ui container segment">
+            <div className="ui container piled segment">
               <div className="ui grid">
                 <div className="eight wide column centered">
                   {data.quiz.map((item) => (
@@ -123,13 +123,11 @@ const Lesson = () => {
       )}
 
       {data.status === "idle" && !data.questions[0] && (
-        // <h2 className="ui message">No questions found</h2>
-
         <div className="ui message">
           <div className="header">No questions found</div>
           <p>
-            Are you ready to answer? Don't worry we will make as soon as
-            possible.
+            Are you ready to answer? Don't worry we will make questions as soon
+            as possible.
           </p>
         </div>
       )}
