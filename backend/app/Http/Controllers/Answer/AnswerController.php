@@ -40,7 +40,7 @@ class AnswerController extends Controller
     {
         $quizLog = QuizLog::create([
             'user_id' => auth()->user()->id,
-            'quiz_id' => $request->quiz_id,
+            'quiz_id' => $request->quizId,
         ]);
 
         $answers = array();
@@ -49,7 +49,7 @@ class AnswerController extends Controller
             $answer = Answer::create([
                 'user_id' => auth()->user()->id,
                 'quiz_log_id' => $quizLog->id,
-                'choice_id' => $answer['choice_id'],
+                'choice_id' => $answer['choiceId'],
             ]);
 
             array_push($answers, $answer);
