@@ -25,6 +25,9 @@ const MainNavigation = () => {
         </NavLink>
 
         <div className="right item menu">
+          <NavLink to="/profile" className="item" activeClassName="active">
+            Profile
+          </NavLink>
           <div className="link item" onClick={onLogoutHandler}>
             Logout
           </div>
