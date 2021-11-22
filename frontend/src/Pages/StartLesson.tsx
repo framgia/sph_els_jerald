@@ -1,5 +1,5 @@
 import { Fragment, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 
 import { useAppSelector, useAppDispatch } from "../app/hooks";
 
@@ -10,9 +10,12 @@ import {
 } from "../features/StartLesson/lessonSlice";
 import { Answer } from "../Types/Answer";
 
+import { saveAnswers } from "../features/StartLesson/lessonAPI";
+
 import classes from "./StartLesson.module.css";
 
 const Lesson = () => {
+  const history = useHistory();
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [showScore, setShowScore] = useState(false);
   const [score, setScore] = useState(0);
@@ -47,8 +50,9 @@ const Lesson = () => {
     }
   };
 
-  const submitHandler = () => {
-    console.log(answers);
+  const submitHandler = async () => {
+    await saveAnswers({ quizId: Number(quizId), answers });
+    history.push("/categories");
   };
 
   const resetHandler = () => {

@@ -7,3 +7,10 @@ export const fetchQuizDetail = (quizId: number) => {
 export const fetchQuestions = (quizId: number) => {
   return axios.get(`/api/quizzes/${quizId}/questions`);
 };
+
+export const saveAnswers = (data: {
+  quizId: number;
+  answers: { choiceId: number }[];
+}) => {
+  return axios.post(`/api/answers`, data);
+};
