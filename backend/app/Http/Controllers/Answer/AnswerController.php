@@ -43,6 +43,10 @@ class AnswerController extends Controller
             'quiz_id' => $request->quizId,
         ]);
 
+        $quizLog->activity()->create([
+            'user_id' => auth()->user()->id,
+        ]);
+
         $answers = array();
 
         foreach ($request->answers as $answer) {

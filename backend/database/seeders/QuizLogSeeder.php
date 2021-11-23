@@ -20,6 +20,10 @@ class QuizLogSeeder extends Seeder
         $quizLogs = QuizLog::factory(10)->create();
 
         foreach ($quizLogs as $quizLog) {
+            $quizLog->activity()->create([
+                'user_id' => $quizLog->user_id,
+            ]);
+
             $questions = Question::where('quiz_id', $quizLog->quiz_id)->get();
 
             foreach ($questions as $question) {
