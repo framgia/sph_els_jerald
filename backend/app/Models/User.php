@@ -83,7 +83,7 @@ class User extends Authenticatable
 
         $count_total_following = Follow::where('user_id', $userId)->count();
 
-        $activities = Activity::where('user_id', $userId)->get();
+        $activities = Activity::latest()->where('user_id', $userId)->get();
 
         $activities_array = array();
 
