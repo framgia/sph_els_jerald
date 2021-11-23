@@ -69,7 +69,7 @@ class User extends Authenticatable
     {
         $user_details = self::where('isAdmin', 0)
                             ->where('id', $userId)
-                            ->first();
+                            ->firstOrFail();
 
         $answers = Answer::where('user_id', $userId)->pluck('choice_id');
 
