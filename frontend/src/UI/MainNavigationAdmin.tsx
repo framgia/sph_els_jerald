@@ -27,6 +27,10 @@ const MainNavigationAdmin = () => {
           Categories
         </NavLink>
 
+        <NavLink to="/admin/users" className="item" activeClassName="active">
+          Users
+        </NavLink>
+
         <div className="right menu">
           <div className="link item" onClick={onLogoutHandler}>
             Logout
