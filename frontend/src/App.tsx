@@ -15,6 +15,7 @@ import AddCategoryWords from "./Pages/components/AdminCategories/AddCategoryWord
 import EditCategoryWords from "./Pages/components/AdminCategories/EditCategoryWords";
 import AdminSignIn from "./Pages/AdminSignIn";
 import Profile from "./Pages/Profile";
+import AdminUsers from "./Pages/AdminUsers";
 
 // Routes
 import UserRoute from "./Routes/UserRoute";
@@ -54,6 +55,7 @@ function App() {
         path="/admin/edit-category/:quizId"
         component={EditCategory}
       />
+      <AdminRoute exact path="/admin/users" component={AdminUsers} />
       <UserRoute path="*" component={NotFound} />
     </Switch>
   );

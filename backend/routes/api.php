@@ -6,6 +6,7 @@ use App\Http\Controllers\Quiz\QuizController;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\Answer\AnswerController;
 use App\Http\Controllers\Admin\AdminQuizController;
+use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Auth\AuthenticationController;
 use App\Http\Controllers\Auth\AdminAuthenticationController;
 
@@ -60,4 +61,5 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::patch('admin/quizzes/questions/{question}', [AdminQuizController::class, 'updateAdminQuizQuestion'])->name('admin.quizzes.questions.update');
     Route::delete('admin/quizzes/questions/{question}', [AdminQuizController::class, 'deleteAdminQuizQuestion'])->name('admin.quizzes.questions.destroy');
     Route::post('admin/signout', [AdminAuthenticationController::class, 'signoutAdmin'])->name('admin.signout');
+    Route::get('admin/users', [AdminUserController::class, 'getUsers'])->name('admin.users.index');
 });

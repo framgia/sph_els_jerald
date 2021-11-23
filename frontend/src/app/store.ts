@@ -4,6 +4,7 @@ import lessonReducer from "../features/StartLesson/lessonSlice";
 import adminQuizReducer from "../features/AdminCategories/adminCategoriesSlice";
 import adminQuizQuestionsReducer from "../features/AdminCategories/adminCategoriesWordsSlice";
 import profileReducer from "../features/Profile/profileSlice";
+import adminUsersReducer from "../features/AdminUsers/adminUsersSlice";
 
 export const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ export const store = configureStore({
     adminQuiz: adminQuizReducer,
     adminQuizQuestions: adminQuizQuestionsReducer,
     profile: profileReducer,
+    adminUsers: adminUsersReducer,
   },
 });
 
