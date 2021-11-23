@@ -138,4 +138,82 @@ class User extends Authenticatable
             'activities' => $activities_array,
         ];
     }
+
+    public static function getDashboardDetails($userId)
+    {
+        $user_details = self::where('isAdmin', 0)
+                            ->where('id', $userId)
+                            ->firstOrFail();
+
+        $answers = Answer::where('user_id', $userId)->pluck('choice_id');
+
+        $count_total_learned_words = Choice::whereIn('id', $answers)
+                                    ->where('is_correct', 1)
+                                    ->count();
+
+        $count_total_learned_lessons = QuizLog::where('user_id', $userId)->count();
+
+        $array_users = array();
+
+        array_push($array_users, $userId);
+
+        $followed_users = Follow::where('user_id', $userId)->pluck('follow_id');
+
+        foreach ($followed_users as $followed_user) {
+            array_push($array_users, $followed_user);
+        }
+
+        $activities = Activity::latest()->whereIn('user_id', $array_users)->get();
+
+        $activities_array = array();
+
+        foreach ($activities as $activity) {
+            if ($activity->activable_type === 'App\Models\QuizLog') {
+                $data = $activity->activable_type::find($activity->activable_id);
+
+                $user = User::find($data->user_id);
+
+                $quiz = Quiz::find($data->quiz_id);
+
+                $answers = Answer::where('user_id', $data->user_id)
+                                ->where('quiz_log_id', $activity->activable_id)
+                                ->pluck('choice_id');
+
+                $count_learned_words = Choice::whereIn('id', $answers)
+                                            ->where('is_correct', 1)
+                                            ->count();
+
+                $count_total_words = Choice::whereIn('id', $answers)
+                                            ->count();
+
+                $data['firstName'] = $user->firstName;
+                $data['count_learned_words'] = $count_learned_words;
+                $data['count_total_words'] = $count_total_words;
+                $data['quiz_title'] = $quiz->title;
+                $data['type'] = 'QuizLog';
+                $data['timestamp'] = $data->created_at->diffForHumans();
+            }
+
+            if ($activity->activable_type === 'App\Models\Follow') {
+                $data = $activity->activable_type::find($activity->activable_id);
+
+                $userId = self::find($data->user_id);
+                $follow_id = self::find($data->follow_id);
+
+                $data['user_firstName'] = $userId->firstName;
+                $data['follow_firstName'] = $follow_id->firstName;
+                $data['type'] = 'Follow';
+                $data['timestamp'] = $data->created_at->diffForHumans();
+            }
+
+            array_push($activities_array, $data);
+        }
+
+        return [
+            'user' => $user_details,
+            'count_total_learned_words' => $count_total_learned_words,
+            'count_total_learned_lessons' => $count_total_learned_lessons,
+            'activities' => $activities_array,
+        ];
+    }
 }

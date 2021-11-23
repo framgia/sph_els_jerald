@@ -22,5 +22,14 @@ class FollowSeeder extends Seeder
         $follow->activity()->create([
             'user_id' => $follow->user_id,
         ]);
+
+        $follow1 = Follow::create([
+            'user_id' => 2,
+            'follow_id' => 4,
+        ]);
+
+        $follow1->activity()->create([
+            'user_id' => $follow1->user_id,
+        ]);
     }
 }

@@ -46,6 +46,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::resource('answers', AnswerController::class)->only(['store']);
     Route::get('users/profile/{user}', [UserController::class, 'showUserProfile'])->name('users.profile');
     Route::get('users/profile', [UserController::class, 'showSelfProfile'])->name('users.self.profile');
+    Route::get('users/dashboard', [UserController::class, 'showSelfDashboard'])->name('users.self.dashboard');
 
     /**
      * Admin
