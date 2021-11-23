@@ -43,6 +43,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('quizzes/{quiz}/questions', [QuizController::class, 'getQuestions'])->name('quizzes.questions');
     Route::post('users/signout', [AuthenticationController::class, 'signout'])->name('users.signout');
     Route::resource('answers', AnswerController::class)->only(['store']);
+    Route::get('users/profile/{user}', [UserController::class, 'showUserProfile'])->name('users.profile');
+    Route::get('users/profile', [UserController::class, 'showSelfProfile'])->name('users.self.profile');
 
     /**
      * Admin

@@ -2,8 +2,15 @@
 
 namespace App\Http\Controllers\User;
 
+use App\Models\Quiz;
 use App\Models\User;
+use App\Models\Answer;
+use App\Models\Choice;
+use App\Models\Follow;
+use App\Models\QuizLog;
+use App\Models\Activity;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
 
@@ -94,5 +101,27 @@ class UserController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function showUserProfile(User $user)
+    {
+        return User::getProfileDetails($user->id);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function showSelfProfile()
+    {
+        return User::getProfileDetails(auth()->user()->id);
     }
 }

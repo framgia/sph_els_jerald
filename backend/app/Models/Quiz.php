@@ -19,4 +19,12 @@ class Quiz extends Model
     {
         return $this->hasMany(Question::class);
     }
+
+    /**
+     * Get the quiz log that owns the quiz.
+     */
+    public function quiz()
+    {
+        return $this->belongsTo(Quiz::class);
+    }
 }
