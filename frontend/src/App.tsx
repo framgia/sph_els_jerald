@@ -17,6 +17,7 @@ import AdminSignIn from "./Pages/AdminSignIn";
 import Profile from "./Pages/Profile";
 import AdminUsers from "./Pages/AdminUsers";
 import GetProfile from "./Pages/GetProfile";
+import LearnedWords from "./Pages/LearnedWords";
 
 // Routes
 import UserRoute from "./Routes/UserRoute";
@@ -34,6 +35,7 @@ function App() {
       <UserRoute exact path="/categories/:quizId" component={StartLesson} />
       <UserRoute exact path="/profile" component={Profile} />
       <UserRoute exact path="/show-profile/:userId" component={GetProfile} />
+      <UserRoute exact path="/learned-words/:userId" component={LearnedWords} />
       <AdminAuthRoute exact path="/admin" component={AdminSignIn} />
       <AdminRoute exact path="/admin/categories" component={AdminCategories} />
       <AdminRoute

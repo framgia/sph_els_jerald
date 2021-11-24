@@ -23,6 +23,10 @@ class FollowSeeder extends Seeder
             'user_id' => $follow->user_id,
         ]);
 
+        $follow->activity()->create([
+            'user_id' => $follow->follow_id,
+        ]);
+
         $follow1 = Follow::create([
             'user_id' => 2,
             'follow_id' => 4,
@@ -30,6 +34,10 @@ class FollowSeeder extends Seeder
 
         $follow1->activity()->create([
             'user_id' => $follow1->user_id,
+        ]);
+
+        $follow1->activity()->create([
+            'user_id' => $follow1->follow_id,
         ]);
 
         $follow2 = Follow::create([
@@ -41,6 +49,10 @@ class FollowSeeder extends Seeder
             'user_id' => $follow2->user_id,
         ]);
 
+        $follow2->activity()->create([
+            'user_id' => $follow2->follow_id,
+        ]);
+
         $follow3 = Follow::create([
             'user_id' => 3,
             'follow_id' => 4,
@@ -48,6 +60,10 @@ class FollowSeeder extends Seeder
 
         $follow3->activity()->create([
             'user_id' => $follow3->user_id,
+        ]);
+
+        $follow3->activity()->create([
+            'user_id' => $follow3->follow_id,
         ]);
     }
 }

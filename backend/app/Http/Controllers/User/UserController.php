@@ -135,4 +135,15 @@ class UserController extends Controller
     {
         return User::getDashboardDetails(auth()->user()->id);
     }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function showLearnedWords(User $user)
+    {
+        return User::getLearnedWords($user->id);
+    }
 }
