@@ -268,4 +268,29 @@ class User extends Authenticatable
             'learned_words' => $learned_words_array,
         ];
     }
+
+    public static function getLearnedLessons($userId)
+    {
+        $user_details = self::where('isAdmin', 0)
+                            ->where('id', $userId)
+                            ->firstOrFail();
+
+        $count_total_learned_lessons = QuizLog::where('user_id', $userId)->count();
+
+        $learned_lessons = QuizLog::where('user_id', $userId)->get();
+
+        $learned_lessons_array = array();
+
+        foreach ($learned_lessons as $learned_lesson) {
+            $data = Quiz::find($learned_lesson->quiz_id);
+
+            array_push($learned_lessons_array, $data);
+        }
+
+        return [
+            'user' => $user_details,
+            'count_total_learned_lessons' => $count_total_learned_lessons,
+            'learned_lessons' => $learned_lessons_array,
+        ];
+    }
 }

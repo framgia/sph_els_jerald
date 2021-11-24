@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
-import { fetchLearnedWords } from "./learnedWordsAPI";
+import { fetchLearnedLessons } from "./learnedLessonsAPI";
 
 type User = {
   id: number;
@@ -28,48 +28,49 @@ const UserInitial = {
   updated_at: "",
 };
 
-export interface LearnedWordsState {
+export interface LearnedLessonsState {
   details: {
     user: User;
-    count_total_learned_words: number;
-    learned_words: { word: string; answer: string; isCorrect: boolean }[];
+    count_total_learned_lessons: number;
+    learned_lessons: { id: number; title: string; description: string }[];
   };
   status: "idle" | "loading" | "failed";
 }
 
-const initialState: LearnedWordsState = {
+const initialState: LearnedLessonsState = {
   details: {
     user: UserInitial,
-    count_total_learned_words: 0,
-    learned_words: [],
+    count_total_learned_lessons: 0,
+    learned_lessons: [],
   },
   status: "idle",
 };
 
-export const fetchLearnedWordsAsync = createAsyncThunk(
-  "quizzes/fetchLearnedWords",
+export const fetchLearnedLessonsAsync = createAsyncThunk(
+  "quizzes/fetchLearnedLessons",
   async () => {
-    const response = await fetchLearnedWords();
+    const response = await fetchLearnedLessons();
     return response.data;
   }
 );
 
-export const getLearnedWordsSlice = createSlice({
-  name: "getLearnedWords",
+export const getLearnedLessonsSlice = createSlice({
+  name: "getLearnedLessons",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchLearnedWordsAsync.pending, (state) => {
+      .addCase(fetchLearnedLessonsAsync.pending, (state) => {
         state.status = "loading";
       })
-      .addCase(fetchLearnedWordsAsync.fulfilled, (state, action) => {
+      .addCase(fetchLearnedLessonsAsync.fulfilled, (state, action) => {
         state.status = "idle";
         state.details = action.payload;
       });
   },
 });
 
-export const selectLearnedWords = (state: RootState) => state.getLearnedWords;
+export const selectLearnedLessons = (state: RootState) =>
+  state.getLearnedLessons;
 
-export default getLearnedWordsSlice.reducer;
+export default getLearnedLessonsSlice.reducer;

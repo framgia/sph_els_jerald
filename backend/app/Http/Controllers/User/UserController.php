@@ -142,8 +142,19 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function showLearnedWords(User $user)
+    public function showLearnedWords()
     {
-        return User::getLearnedWords($user->id);
+        return User::getLearnedWords(auth()->user()->id);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function showLearnedLessons()
+    {
+        return User::getLearnedLessons(auth()->user()->id);
     }
 }

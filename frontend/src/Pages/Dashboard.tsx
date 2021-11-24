@@ -42,12 +42,15 @@ const Dashboard = () => {
             />
             <h1 className="ui huge header centered">{fullName}</h1>
             <Link
-              to={`/learned-words/${data.details.user.id}`}
+              to={`/learned-words`}
               className="ui button basic fluid aligned"
             >
               Learned {data.details.count_total_learned_words} words
             </Link>
-            <Link to="/" className="ui button basic fluid aligned">
+            <Link
+              to={`/learned-lessons`}
+              className="ui button basic fluid aligned"
+            >
               Learned {data.details.count_total_learned_lessons} lessons
             </Link>
           </div>

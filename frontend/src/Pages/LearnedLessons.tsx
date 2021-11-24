@@ -3,12 +3,12 @@ import { Link } from "react-router-dom";
 
 import { useAppSelector, useAppDispatch } from "../app/hooks";
 import {
-  selectLearnedWords,
-  fetchLearnedWordsAsync,
-} from "../features/LearnedWords/learnedWordsSlice";
+  selectLearnedLessons,
+  fetchLearnedLessonsAsync,
+} from "../features/LearnedLessons/learnedLessonsSlice";
 
-const LearnedWords = () => {
-  const data = useAppSelector(selectLearnedWords);
+const LearnedLessons = () => {
+  const data = useAppSelector(selectLearnedLessons);
 
   const fullName =
     data.details.user.firstName +
@@ -20,7 +20,7 @@ const LearnedWords = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(fetchLearnedWordsAsync());
+    dispatch(fetchLearnedLessonsAsync());
   }, [dispatch]);
 
   return (
@@ -41,32 +41,34 @@ const LearnedWords = () => {
             />
             <h1 className="ui huge header centered">{fullName}</h1>
             <Link
-              to={`/learned-words`}
+              to={`/learned-lessons`}
               className="ui button basic fluid aligned"
             >
-              Learned {data.details.count_total_learned_words} words
+              Learned {data.details.count_total_learned_lessons} lessons
             </Link>
           </div>
         </div>
         <div className="twelve wide computer column ten wide tablet column">
           <div className="ui segment raised padded stackable">
-            <div className="ui huge header">Words Learned</div>
+            <div className="ui huge header">Lessons Learned</div>
             <div className="ui divider"></div>
             <table className="ui celled table stackable">
               <thead>
                 <tr>
-                  <th>Word</th>
-                  <th>Answer</th>
-                  <th>Result</th>
+                  <th>Title</th>
+                  <th>Description</th>
+                  <th>Action</th>
                 </tr>
               </thead>
               <tbody>
-                {data.details.learned_words.map((item) => (
+                {data.details.learned_lessons.map((item) => (
                   <tr>
-                    <td>{item.word}</td>
-                    <td>{item.answer}</td>
-                    <td className="center aligned">
-                      <i className="large green checkmark icon"></i>
+                    <td>{item.title}</td>
+                    <td>{item.description}</td>
+                    <td className="single line">
+                      <Link to={`/admin/categories/${item.id}`}>
+                        <button className="ui button primary">Results</button>
+                      </Link>
                     </td>
                   </tr>
                 ))}
@@ -79,4 +81,4 @@ const LearnedWords = () => {
   );
 };
 
-export default LearnedWords;
+export default LearnedLessons;
