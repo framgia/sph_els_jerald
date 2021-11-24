@@ -71,6 +71,16 @@ class User extends Authenticatable
                             ->where('id', $userId)
                             ->firstOrFail();
 
+        $isFollowed = Follow::where('user_id', auth()->user()->id)
+                            ->where('follow_id', $userId)
+                            ->first();
+
+        if ($isFollowed) {
+            $isFollowed = true;
+        } else {
+            $isFollowed = false;
+        }
+
         $answers = Answer::where('user_id', $userId)->pluck('choice_id');
 
         $count_total_learned_words = Choice::whereIn('id', $answers)
@@ -130,6 +140,8 @@ class User extends Authenticatable
         }
 
         return [
+            'isFollowed' => $isFollowed,
+            'signed_in_user' => auth()->user()->id,
             'user' => $user_details,
             'count_total_learned_words' => $count_total_learned_words,
             'count_total_learned_lessons' => $count_total_learned_lessons,

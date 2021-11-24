@@ -1,15 +1,16 @@
 import { Fragment, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 import { useAppSelector, useAppDispatch } from "../app/hooks";
 import {
-  selectDashboard,
-  fetchSelfDashboardAsync,
-} from "../features/Dashboard/dashboardSlice";
+  selectGetProfile,
+  fetchGetProfileAsync,
+} from "../features/GetProfile/getProfileSlice";
 import { Activity } from "../Types/Activity";
 
-const Dashboard = () => {
-  const data = useAppSelector(selectDashboard);
+const GetProfile = () => {
+  const data = useAppSelector(selectGetProfile);
+  const { userId } = useParams<{ userId: string }>();
 
   const fullName =
     data.details.user.firstName +
@@ -21,8 +22,8 @@ const Dashboard = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(fetchSelfDashboardAsync());
-  }, [dispatch]);
+    dispatch(fetchGetProfileAsync(Number(userId)));
+  }, [dispatch, userId]);
 
   return (
     <Fragment>
@@ -41,6 +42,28 @@ const Dashboard = () => {
               alt="Profile Pic"
             />
             <h1 className="ui huge header centered">{fullName}</h1>
+            <div className="ui hidden divider"></div>
+            <div className="ui divider"></div>
+            <div className="ui grid center aligned">
+              <div className="eight wide column">
+                <h1 className="ui header">
+                  {data.details.count_total_followers}
+                  <div className="sub header">Followers</div>
+                </h1>
+              </div>
+              <div className="eight wide column">
+                <h1 className="ui header">
+                  {data.details.count_total_following}
+                  <div className="sub header">Following</div>
+                </h1>
+              </div>
+            </div>
+            <div className="ui hidden divider"></div>
+            {data.details.isFollowed ? (
+              <button className="fluid ui button padded">Unfollow</button>
+            ) : (
+              <button className="fluid ui primary button padded">Follow</button>
+            )}
             <Link to="/" className="ui button basic fluid aligned">
               Learned {data.details.count_total_learned_words} words
             </Link>
@@ -66,14 +89,7 @@ const Dashboard = () => {
                     <div className="summary">
                       {item.type === "QuizLog" && (
                         <Fragment>
-                          {data.details.user.id === item.user_id ? (
-                            <Link to="/profile">You</Link>
-                          ) : (
-                            <Link to={`/show-profile/${item.user_id}`}>
-                              {item.firstName}
-                            </Link>
-                          )}{" "}
-                          learned {item.count_learned_words} of{" "}
+                          {item.firstName} learned {item.count_learned_words} of{" "}
                           {item.count_total_words} words in{" "}
                           <Link to="/">{item.quiz_title}</Link>
                           <div className="date">{item.timestamp}</div>
@@ -81,21 +97,14 @@ const Dashboard = () => {
                       )}
                       {item.type === "Follow" && (
                         <Fragment>
-                          {data.details.user.id === item.user_id ? (
-                            <Link to="/profile">You</Link>
-                          ) : (
-                            <Link to={`/show-profile/${item.user_id}`}>
-                              {item.user_firstName}
-                            </Link>
-                          )}{" "}
-                          followed{" "}
-                          {data.details.user.id === item.follow_id ? (
+                          {item.user_firstName} followed{" "}
+                          {data.details.signed_in_user === item.follow_id ? (
                             <Link to="/profile">You</Link>
                           ) : (
                             <Link to={`/show-profile/${item.follow_id}`}>
                               {item.follow_firstName}
                             </Link>
-                          )}{" "}
+                          )}
                           <div className="date">{item.timestamp}</div>
                         </Fragment>
                       )}
@@ -111,4 +120,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default GetProfile;

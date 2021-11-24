@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
-import { fetchSelfProfile } from "./profileAPI";
+import { fetchGetProfile } from "./getProfileAPI";
 
 import { Activity } from "../../Types/Activity";
 
@@ -30,7 +30,7 @@ const UserInitial = {
   updated_at: "",
 };
 
-export interface ProfileState {
+export interface GetProfileState {
   details: {
     isFollowed: boolean;
     signed_in_user: number;
@@ -44,7 +44,7 @@ export interface ProfileState {
   status: "idle" | "loading" | "failed";
 }
 
-const initialState: ProfileState = {
+const initialState: GetProfileState = {
   details: {
     isFollowed: false,
     signed_in_user: 0,
@@ -58,30 +58,30 @@ const initialState: ProfileState = {
   status: "idle",
 };
 
-export const fetchSelfProfileAsync = createAsyncThunk(
-  "quizzes/fetchSelfProfile",
-  async () => {
-    const response = await fetchSelfProfile();
+export const fetchGetProfileAsync = createAsyncThunk(
+  "quizzes/fetchGetProfile",
+  async (userId: number) => {
+    const response = await fetchGetProfile(userId);
     return response.data;
   }
 );
 
-export const profileSlice = createSlice({
-  name: "profile",
+export const getProfileSlice = createSlice({
+  name: "getProfile",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchSelfProfileAsync.pending, (state) => {
+      .addCase(fetchGetProfileAsync.pending, (state) => {
         state.status = "loading";
       })
-      .addCase(fetchSelfProfileAsync.fulfilled, (state, action) => {
+      .addCase(fetchGetProfileAsync.fulfilled, (state, action) => {
         state.status = "idle";
         state.details = action.payload;
       });
   },
 });
 
-export const selectProfile = (state: RootState) => state.profile;
+export const selectGetProfile = (state: RootState) => state.getProfile;
 
-export default profileSlice.reducer;
+export default getProfileSlice.reducer;
