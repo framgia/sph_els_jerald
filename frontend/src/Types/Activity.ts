@@ -10,6 +10,7 @@ export type Activity = {
   quiz_title?: string;
   user_firstName?: string;
   follow_firstName?: string;
+  follow_id?: number;
   type: string;
   timestamp: string;
 };
@@ -26,6 +27,7 @@ export const ActivityInitial = {
   quiz_title: "",
   user_firstName: "",
   follow_firstName: "",
+  follow_id: 0,
   type: "",
   timestamp: "",
 };

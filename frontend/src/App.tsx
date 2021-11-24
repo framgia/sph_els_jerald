@@ -16,6 +16,7 @@ import EditCategoryWords from "./Pages/components/AdminCategories/EditCategoryWo
 import AdminSignIn from "./Pages/AdminSignIn";
 import Profile from "./Pages/Profile";
 import AdminUsers from "./Pages/AdminUsers";
+import GetProfile from "./Pages/GetProfile";
 
 // Routes
 import UserRoute from "./Routes/UserRoute";
@@ -32,6 +33,7 @@ function App() {
       <UserRoute exact path="/categories" component={Categories} />
       <UserRoute exact path="/categories/:quizId" component={StartLesson} />
       <UserRoute exact path="/profile" component={Profile} />
+      <UserRoute exact path="/show-profile/:userId" component={GetProfile} />
       <AdminAuthRoute exact path="/admin" component={AdminSignIn} />
       <AdminRoute exact path="/admin/categories" component={AdminCategories} />
       <AdminRoute

@@ -71,8 +71,8 @@ const Profile = () => {
           <div className="ui segment raised padded">
             <div className="ui huge header">Activities</div>
             <div className="ui divider"></div>
-            {data.details.activities.map((item: Activity) => (
-              <div className="ui large feed">
+            {data.details.activities.map((item: Activity, index) => (
+              <div className="ui large feed" key={index}>
                 <div className="event">
                   <div className="label">
                     <img
@@ -93,7 +93,9 @@ const Profile = () => {
                       {item.type === "Follow" && (
                         <Fragment>
                           You followed{" "}
-                          <Link to="/">{item.follow_firstName}</Link>
+                          <Link to={`/show-profile/${item.follow_id}`}>
+                            {item.follow_firstName}
+                          </Link>
                           <div className="date">{item.timestamp}</div>
                         </Fragment>
                       )}

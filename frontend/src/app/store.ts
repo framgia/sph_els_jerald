@@ -6,6 +6,7 @@ import adminQuizQuestionsReducer from "../features/AdminCategories/adminCategori
 import profileReducer from "../features/Profile/profileSlice";
 import adminUsersReducer from "../features/AdminUsers/adminUsersSlice";
 import dashboardReducer from "../features/Dashboard/dashboardSlice";
+import getProfileReducer from "../features/GetProfile/getProfileSlice";
 
 export const store = configureStore({
   reducer: {
@@ -16,6 +17,7 @@ export const store = configureStore({
     profile: profileReducer,
     adminUsers: adminUsersReducer,
     dashboard: dashboardReducer,
+    getProfile: getProfileReducer,
   },
 });
 
