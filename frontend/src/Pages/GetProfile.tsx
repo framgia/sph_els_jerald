@@ -70,16 +70,12 @@ const GetProfile = () => {
                 )}
               </div>
             )}
-
-            <Link
-              to={`/learned-words/${data.details.user.id}`}
-              className="ui button basic fluid aligned"
-            >
+            <button className="ui button basic fluid aligned">
               Learned {data.details.count_total_learned_words} words
-            </Link>
-            <Link to="/" className="ui button basic fluid aligned">
+            </button>
+            <button className="ui button basic fluid aligned">
               Learned {data.details.count_total_learned_lessons} lessons
-            </Link>
+            </button>
           </div>
         </div>
         <div className="twelve wide computer column ten wide tablet column">

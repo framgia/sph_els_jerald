@@ -1,5 +1,5 @@
 import axios from "../../axios/api";
 
-export const fetchLearnedWords = (userId: number) => {
-  return axios.get(`/api/users/learned-words/${userId}`);
+export const fetchLearnedWords = () => {
+  return axios.get(`/api/users/learned-words`);
 };
