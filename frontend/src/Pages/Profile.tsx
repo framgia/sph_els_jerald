@@ -59,7 +59,10 @@ const Profile = () => {
               </div>
             </div>
             <div className="ui hidden divider"></div>
-            <Link to="/" className="ui button basic fluid aligned">
+            <Link
+              to={`/learned-words/${data.details.user.id}`}
+              className="ui button basic fluid aligned"
+            >
               Learned {data.details.count_total_learned_words} words
             </Link>
             <Link to="/" className="ui button basic fluid aligned">
@@ -84,7 +87,14 @@ const Profile = () => {
                     <div className="summary">
                       {item.type === "QuizLog" && (
                         <Fragment>
-                          You learned {item.count_learned_words} of{" "}
+                          {data.details.signed_in_user === item.user_id ? (
+                            <Link to="/profile">You</Link>
+                          ) : (
+                            <Link to={`/show-profile/${item.user_id}`}>
+                              {item.firstName}
+                            </Link>
+                          )}{" "}
+                          learned {item.count_learned_words} of{" "}
                           {item.count_total_words} words in{" "}
                           <Link to="/">{item.quiz_title}</Link>
                           <div className="date">{item.timestamp}</div>
@@ -92,10 +102,21 @@ const Profile = () => {
                       )}
                       {item.type === "Follow" && (
                         <Fragment>
-                          You followed{" "}
-                          <Link to={`/show-profile/${item.follow_id}`}>
-                            {item.follow_firstName}
-                          </Link>
+                          {data.details.signed_in_user === item.user_id ? (
+                            <Link to="/profile">You</Link>
+                          ) : (
+                            <Link to={`/show-profile/${item.user_id}`}>
+                              {item.user_firstName}
+                            </Link>
+                          )}{" "}
+                          followed{" "}
+                          {data.details.signed_in_user === item.follow_id ? (
+                            <Link to="/profile">You</Link>
+                          ) : (
+                            <Link to={`/show-profile/${item.follow_id}`}>
+                              {item.follow_firstName}
+                            </Link>
+                          )}
                           <div className="date">{item.timestamp}</div>
                         </Fragment>
                       )}

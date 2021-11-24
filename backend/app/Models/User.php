@@ -204,21 +204,25 @@ class User extends Authenticatable
                 $data['quiz_title'] = $quiz->title;
                 $data['type'] = 'QuizLog';
                 $data['timestamp'] = $data->created_at->diffForHumans();
+
+                array_push($activities_array, $data);
             }
 
             if ($activity->activable_type === 'App\Models\Follow') {
                 $data = $activity->activable_type::find($activity->activable_id);
 
-                $userId = self::find($data->user_id);
-                $follow_id = self::find($data->follow_id);
+                if ($activity->user_id === $data->user_id) {
+                    $userId = self::find($data->user_id);
+                    $follow_id = self::find($data->follow_id);
 
-                $data['user_firstName'] = $userId->firstName;
-                $data['follow_firstName'] = $follow_id->firstName;
-                $data['type'] = 'Follow';
-                $data['timestamp'] = $data->created_at->diffForHumans();
+                    $data['user_firstName'] = $userId->firstName;
+                    $data['follow_firstName'] = $follow_id->firstName;
+                    $data['type'] = 'Follow';
+                    $data['timestamp'] = $data->created_at->diffForHumans();
+
+                    array_push($activities_array, $data);
+                }
             }
-
-            array_push($activities_array, $data);
         }
 
         return [
@@ -226,6 +230,42 @@ class User extends Authenticatable
             'count_total_learned_words' => $count_total_learned_words,
             'count_total_learned_lessons' => $count_total_learned_lessons,
             'activities' => $activities_array,
+        ];
+    }
+
+    public static function getLearnedWords($userId)
+    {
+        $user_details = self::where('isAdmin', 0)
+                            ->where('id', $userId)
+                            ->firstOrFail();
+
+        $answers = Answer::where('user_id', $userId)->pluck('choice_id');
+
+        $count_total_learned_words = Choice::whereIn('id', $answers)
+                                    ->where('is_correct', 1)
+                                    ->count();
+
+        $learned_words = Choice::whereIn('id', $answers)->get();
+
+        $learned_words_array = array();
+
+        foreach ($learned_words as $learned_word) {
+            if ($learned_word->is_correct === 1) {
+                $question = Question::find($learned_word->question_id);
+                $quiz = Quiz::find($question->quiz_id);
+
+                $data['word'] = $question->word;
+                $data['answer'] = $learned_word->value;
+                $data['isCorrect'] = $learned_word->is_correct;
+                
+                array_push($learned_words_array, $data);
+            }
+        }
+        
+        return [
+            'user' => $user_details,
+            'count_total_learned_words' => $count_total_learned_words,
+            'learned_words' => $learned_words_array,
         ];
     }
 }
