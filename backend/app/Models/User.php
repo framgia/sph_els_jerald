@@ -337,4 +337,35 @@ class User extends Authenticatable
             'results' => $results_array,
         ];
     }
+
+    public static function getUsersList()
+    {
+        $users = User::where('isAdmin', 0)
+                    ->where('id', '!=', auth()->user()->id)
+                    ->get();
+
+        $users_array = array();
+
+        foreach ($users as $user) {
+            $auth_user_follow = Follow::where('user_id', auth()->user()->id)
+                                    ->where('follow_id', $user->id)
+                                    ->first();
+
+            $data['id'] = $user->id;
+            $data['firstName'] = $user->firstName;
+            $data['middleName'] = $user->middleName;
+            $data['lastName'] = $user->lastName;
+            $data['avatar'] = $user->avatar;
+
+            if ($auth_user_follow) {
+                $data['isFollowed'] = true;
+            } else {
+                $data['isFollowed'] = false;
+            }
+
+            array_push($users_array, $data);
+        }
+
+        return $users_array;
+    }
 }
