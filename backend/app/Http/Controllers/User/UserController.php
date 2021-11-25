@@ -157,4 +157,15 @@ class UserController extends Controller
     {
         return User::getLearnedLessons(auth()->user()->id);
     }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function showLearnedLessonResult($quiz)
+    {
+        return User::getLearnedLessonResult(auth()->user()->id, $quiz);
+    }
 }

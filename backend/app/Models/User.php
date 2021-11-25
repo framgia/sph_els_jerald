@@ -293,4 +293,48 @@ class User extends Authenticatable
             'learned_lessons' => $learned_lessons_array,
         ];
     }
+
+    public static function getLearnedLessonResult($userId, $quizId)
+    {
+        $user_details = self::where('isAdmin', 0)
+                            ->where('id', $userId)
+                            ->firstOrFail();
+
+        $count_total_learned_lessons = QuizLog::where('user_id', $userId)->count();
+
+        $quiz_log_id = QuizLog::where('user_id', $userId)
+                    ->where('quiz_id', $quizId)
+                    ->pluck('id');
+
+        $quiz = Quiz::find($quizId);
+
+        $answers = Answer::where('quiz_log_id', $quiz_log_id)->pluck('choice_id');
+
+        $results = Choice::whereIn('id', $answers)->get();
+
+        $correct_answers = $results->where('is_correct', 1)->count();
+        $total_answers = $results->count();
+
+        $results_array = array();
+
+        foreach ($results as $result) {
+            $question = Question::find($result->question_id);
+            $quiz = Quiz::find($question->quiz_id);
+
+            $data['word'] = $question->word;
+            $data['answer'] = $result->value;
+            $data['isCorrect'] = $result->is_correct;
+            
+            array_push($results_array, $data);
+        }
+
+        return [
+            'user' => $user_details,
+            'quiz' => $quiz,
+            'count_total_learned_lessons' => $count_total_learned_lessons,
+            'correct_answers' => $correct_answers,
+            'total_answers' => $total_answers,
+            'results' => $results_array,
+        ];
+    }
 }
