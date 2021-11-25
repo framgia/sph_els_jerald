@@ -10,6 +10,7 @@ import getProfileReducer from "../features/GetProfile/getProfileSlice";
 import getLearnedWordsReducer from "../features/LearnedWords/learnedWordsSlice";
 import getLearnedLessonsReducer from "../features/LearnedLessons/learnedLessonsSlice";
 import getLearnedLessonResultReducer from "../features/LearnedLessonResult/learnedLessonResultSlice";
+import usersReducer from "../features/Users/usersSlice";
 
 export const store = configureStore({
   reducer: {
@@ -24,6 +25,7 @@ export const store = configureStore({
     getLearnedWords: getLearnedWordsReducer,
     getLearnedLessons: getLearnedLessonsReducer,
     getLearnedLessonResult: getLearnedLessonResultReducer,
+    users: usersReducer,
   },
 });
 

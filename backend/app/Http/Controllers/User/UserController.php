@@ -168,4 +168,15 @@ class UserController extends Controller
     {
         return User::getLearnedLessonResult(auth()->user()->id, $quiz);
     }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function showUsersList()
+    {
+        return User::getUsersList();
+    }
 }

@@ -23,6 +23,9 @@ const MainNavigation = () => {
         <NavLink to="/categories" className="item" activeClassName="active">
           Categories
         </NavLink>
+        <NavLink to="/users" className="item" activeClassName="active">
+          Users
+        </NavLink>
 
         <div className="right item menu">
           <NavLink to="/profile" className="item" activeClassName="active">

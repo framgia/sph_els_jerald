@@ -50,6 +50,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('users/learned-words', [UserController::class, 'showLearnedWords'])->name('users.learned-words');
     Route::get('users/learned-lessons', [UserController::class, 'showLearnedLessons'])->name('users.learned-lessons');
     Route::get('users/learned-lessons/{quiz}', [UserController::class, 'showLearnedLessonResult'])->name('users.learned-lessons.result');
+    Route::get('users', [UserController::class, 'showUsersList'])->name('users.index');
 
     /**
      * Admin
