@@ -1,14 +1,15 @@
 import { Fragment, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 import { useAppSelector, useAppDispatch } from "../app/hooks";
 import {
-  selectLearnedLessons,
-  fetchLearnedLessonsAsync,
-} from "../features/LearnedLessons/learnedLessonsSlice";
+  selectLearnedLessonResult,
+  fetchLearnedLessonResultAsync,
+} from "../features/LearnedLessonResult/learnedLessonResultSlice";
 
-const LearnedLessons = () => {
-  const data = useAppSelector(selectLearnedLessons);
+const LearnedLessonResult = () => {
+  const data = useAppSelector(selectLearnedLessonResult);
+  const { quizId } = useParams<{ quizId: string }>();
 
   const fullName =
     data.details.user.firstName +
@@ -20,8 +21,8 @@ const LearnedLessons = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(fetchLearnedLessonsAsync());
-  }, [dispatch]);
+    dispatch(fetchLearnedLessonResultAsync(Number(quizId)));
+  }, [dispatch, quizId]);
 
   return (
     <Fragment>
@@ -50,25 +51,31 @@ const LearnedLessons = () => {
         </div>
         <div className="twelve wide computer column ten wide tablet column">
           <div className="ui segment raised padded stackable">
-            <div className="ui huge header">Lessons Learned</div>
+            <div className="ui huge header">{data.details.quiz.title}</div>
+            <div className="ui tiny header">
+              Result: {data.details.correct_answers} of{" "}
+              {data.details.total_answers}
+            </div>
             <div className="ui divider"></div>
             <table className="ui celled table stackable">
               <thead>
                 <tr>
-                  <th>Title</th>
-                  <th>Description</th>
-                  <th>Action</th>
+                  <th>Word</th>
+                  <th>Answer</th>
+                  <th>Result</th>
                 </tr>
               </thead>
               <tbody>
-                {data.details.learned_lessons.map((item) => (
+                {data.details.results.map((item) => (
                   <tr>
-                    <td>{item.title}</td>
-                    <td>{item.description}</td>
-                    <td className="single line">
-                      <Link to={`/learned-lesson/result/${item.id}`}>
-                        <button className="ui button primary">Results</button>
-                      </Link>
+                    <td>{item.word}</td>
+                    <td>{item.answer}</td>
+                    <td className="center aligned">
+                      {item.isCorrect ? (
+                        <i className="large green checkmark icon"></i>
+                      ) : (
+                        <i className="large red close icon"></i>
+                      )}
                     </td>
                   </tr>
                 ))}
@@ -81,4 +88,4 @@ const LearnedLessons = () => {
   );
 };
 
-export default LearnedLessons;
+export default LearnedLessonResult;
