@@ -26,8 +26,8 @@ const Users = () => {
 
         {data.users &&
           data.status === "idle" &&
-          data.users.map((item) => (
-            <div className="column" key={item.id}>
+          data.users.map((item, index) => (
+            <div className="column" key={index}>
               <div className="ui fluid card">
                 <div className="image">
                   <img
@@ -40,14 +40,6 @@ const Users = () => {
                   <Link to={`/show-profile/${item.id}`} className="header">
                     {item.firstName} {item.middleName.charAt(0)} {item.lastName}
                   </Link>
-                  <div className="ui divider"></div>
-                  {item.isFollowed ? (
-                    <button className="fluid ui button padded">Unfollow</button>
-                  ) : (
-                    <button className="fluid ui primary button padded">
-                      Follow
-                    </button>
-                  )}
                 </div>
               </div>
             </div>

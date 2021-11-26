@@ -7,6 +7,7 @@ import {
   fetchGetProfileAsync,
 } from "../features/GetProfile/getProfileSlice";
 import { Activity } from "../Types/Activity";
+import { follow, unfollow } from "../features/Follow/followAPI";
 
 const GetProfile = () => {
   const data = useAppSelector(selectGetProfile);
@@ -24,6 +25,18 @@ const GetProfile = () => {
   useEffect(() => {
     dispatch(fetchGetProfileAsync(Number(userId)));
   }, [dispatch, userId]);
+
+  const onFollowHandler = async (followId: number) => {
+    await follow(followId);
+
+    dispatch(fetchGetProfileAsync(Number(userId)));
+  };
+
+  const onUnfollowHandler = async (followId: number) => {
+    await unfollow(followId);
+
+    dispatch(fetchGetProfileAsync(Number(userId)));
+  };
 
   return (
     <Fragment>
@@ -62,9 +75,17 @@ const GetProfile = () => {
             {data.details.signed_in_user !== data.details.user.id && (
               <div>
                 {data.details.isFollowed ? (
-                  <button className="fluid ui button padded">Unfollow</button>
+                  <button
+                    className="fluid ui button padded"
+                    onClick={() => onUnfollowHandler(data.details.user.id)}
+                  >
+                    Unfollow
+                  </button>
                 ) : (
-                  <button className="fluid ui primary button padded">
+                  <button
+                    className="fluid ui primary button padded"
+                    onClick={() => onFollowHandler(data.details.user.id)}
+                  >
                     Follow
                   </button>
                 )}
@@ -103,8 +124,7 @@ const GetProfile = () => {
                             </Link>
                           )}{" "}
                           learned {item.count_learned_words} of{" "}
-                          {item.count_total_words} words in{" "}
-                          <Link to="/">{item.quiz_title}</Link>
+                          {item.count_total_words} words in {item.quiz_title}
                           <div className="date">{item.timestamp}</div>
                         </Fragment>
                       )}

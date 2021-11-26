@@ -51,6 +51,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('users/learned-lessons', [UserController::class, 'showLearnedLessons'])->name('users.learned-lessons');
     Route::get('users/learned-lessons/{quiz}', [UserController::class, 'showLearnedLessonResult'])->name('users.learned-lessons.result');
     Route::get('users', [UserController::class, 'showUsersList'])->name('users.index');
+    Route::post('users/follow/{user}', [UserController::class, 'follow'])->name('users.follow');
+    Route::post('users/unfollow/{user}', [UserController::class, 'unfollow'])->name('users.unfollow');
 
     /**
      * Admin
