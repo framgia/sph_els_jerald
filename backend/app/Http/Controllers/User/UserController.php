@@ -50,7 +50,7 @@ class UserController extends Controller
             'middleName' => ['required', 'max:255'],
             'lastName' => ['required', 'max:255'],
             'email' => ['required', 'email', 'max:255', Rule::unique('users', 'email')],
-            'password' => ['nullable', 'min:7', 'max:255'],
+            'password' => ['required', 'min:7', 'max:255'],
         ]);
 
         if ($validator->fails()) {
