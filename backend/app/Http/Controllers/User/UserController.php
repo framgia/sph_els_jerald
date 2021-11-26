@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -249,5 +250,54 @@ class UserController extends Controller
                 'message' => 'You are not following this user'
             ], 400);
         }
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function showSelfDetails()
+    {
+        return User::find(auth()->user()->id);
+    }
+
+    /**
+     * Update the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function updateSelfDetails(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'firstName' => ['required', 'max:255'],
+            'middleName' => ['required', 'max:255'],
+            'lastName' => ['required', 'max:255'],
+            'email' => ['required', 'email', 'max:255', Rule::unique('users', 'email')->ignore(auth()->user()->id)],
+            'password' => ['nullable', 'min:7', 'max:255'],
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+
+        $attributes = $validator->validated();
+
+        $data = [
+            'firstName' => $attributes['firstName'],
+            'middleName' => $attributes['middleName'],
+            'lastName' => $attributes['lastName'],
+            'email' => $attributes['email'],
+        ];
+
+        if ($attributes['password']) {
+            $data['password'] = bcrypt($attributes['password']);
+        }
+
+        $user = User::where('id', auth()->user()->id)->update($data);
+
+        return $user;
     }
 }
