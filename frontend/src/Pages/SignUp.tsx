@@ -29,7 +29,7 @@ const SignUp = () => {
       const response = await registerUser(data);
 
       if (response?.status === 422) {
-        setError(response.data.errors.email);
+        setError(response.data.email);
       } else if (response?.status === 201) {
         setError("");
 

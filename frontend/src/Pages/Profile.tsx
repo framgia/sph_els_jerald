@@ -41,7 +41,9 @@ const Profile = () => {
               alt="Profile Pic"
             />
             <h1 className="ui huge header centered">{fullName}</h1>
-            <button className="fluid ui button primary padded">Edit</button>
+            <Link to="/edit-profile" className="fluid ui button primary padded">
+              Edit
+            </Link>
             <div className="ui hidden divider"></div>
             <div className="ui divider"></div>
             <div className="ui grid center aligned">
