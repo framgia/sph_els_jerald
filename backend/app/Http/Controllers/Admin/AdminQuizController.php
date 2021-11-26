@@ -8,6 +8,7 @@ use App\Models\Question;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
 
 class AdminQuizController extends Controller
 {
@@ -29,12 +30,18 @@ class AdminQuizController extends Controller
      */
      public function storeAdminQuiz(Request $request)
     {
-        $request->validate([
-            'title' => 'required',
-            'description' => 'required',
+        $validator = Validator::make($request->all(), [
+            'title' => ['required'],
+            'description' => ['required'],
         ]);
 
-        return Quiz::create($request->all());
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+
+        $attributes = $validator->validated();
+
+        return Quiz::create($attributes);
     }
 
     /**
