@@ -81,7 +81,13 @@ const Dashboard = () => {
                           )}{" "}
                           learned {item.count_learned_words} of{" "}
                           {item.count_total_words} words in{" "}
-                          <Link to="/">{item.quiz_title}</Link>
+                          {data.details.user.id === item.user_id ? (
+                            <Link to={`/learned-lesson/result/${item.quiz_id}`}>
+                              {item.quiz_title}
+                            </Link>
+                          ) : (
+                            <Fragment>{item.quiz_title}</Fragment>
+                          )}
                           <div className="date">{item.timestamp}</div>
                         </Fragment>
                       )}

@@ -179,4 +179,75 @@ class UserController extends Controller
     {
         return User::getUsersList();
     }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function follow(User $user)
+    {
+        $auth_user_follow = Follow::where('user_id', auth()->user()->id)
+                                    ->where('follow_id', $user->id)
+                                    ->first();
+
+        if (!$auth_user_follow) {
+            $follow = Follow::create([
+                'user_id' => auth()->user()->id,
+                'follow_id' => $user->id,
+            ]);
+
+            $follow->activity()->create([
+                'user_id' => $follow->user_id,
+            ]);
+
+            $follow->activity()->create([
+                'user_id' => $follow->follow_id,
+            ]);
+
+            return response([
+                'message' => 'Followed successfully'
+            ], 201);
+        } else {
+            return response([
+                'message' => 'You already followed this user'
+            ], 400);
+        }
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function unfollow(User $user)
+    {
+        $auth_user_follow = Follow::where('user_id', auth()->user()->id)
+                                ->where('follow_id', $user->id)
+                                ->first();
+
+        if ($auth_user_follow) {
+            $unfollow = Follow::where('user_id', auth()->user()->id)
+                            ->where('follow_id', $user->id)
+                            ->delete();
+
+            $follow_activity = Activity::where('user_id', auth()->user()->id)
+                                    ->where('activable_id', $auth_user_follow->id)
+                                    ->delete();
+
+            $followed_activity = Activity::where('user_id', $user->id)
+                                    ->where('activable_id', $auth_user_follow->id)
+                                    ->delete();
+
+            return response([
+                'message' => 'Unfollowed successfully'
+            ], 201);
+        } else {
+            return response([
+                'message' => 'You are not following this user'
+            ], 400);
+        }
+    }
 }

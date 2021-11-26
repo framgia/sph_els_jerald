@@ -99,7 +99,9 @@ const Profile = () => {
                           )}{" "}
                           learned {item.count_learned_words} of{" "}
                           {item.count_total_words} words in{" "}
-                          <Link to="/">{item.quiz_title}</Link>
+                          <Link to={`/learned-lesson/result/${item.quiz_id}`}>
+                            {item.quiz_title}
+                          </Link>
                           <div className="date">{item.timestamp}</div>
                         </Fragment>
                       )}
