@@ -45,7 +45,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $attributes = $request->validate([
+        $validator = Validator::make($request->all(), [
             'firstName' => ['required', 'max:255'],
             'middleName' => ['required', 'max:255'],
             'lastName' => ['required', 'max:255'],
@@ -53,8 +53,15 @@ class UserController extends Controller
             'password' => ['required', 'min:7', 'max:255'],
         ]);
 
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+
+        $attributes = $validator->validated();
+
         $attributes['password'] = bcrypt($request->password);
         $attributes['isAdmin'] = 0;
+        $attributes['avatar'] = '';
 
         return $user = User::create($attributes);
     }
