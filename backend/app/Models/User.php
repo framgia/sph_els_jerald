@@ -7,6 +7,7 @@ use App\Models\Answer;
 use App\Models\Choice;
 use App\Models\QuizLog;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -118,6 +119,7 @@ class User extends Authenticatable
                                             ->count();
 
                 $data['firstName'] = $user->firstName;
+                $data['avatar'] = $user->avatar;
                 $data['count_learned_words'] = $count_learned_words;
                 $data['count_total_words'] = $count_total_words;
                 $data['quiz_title'] = $quiz->title;
@@ -132,6 +134,7 @@ class User extends Authenticatable
                 $follow_id = self::find($data->follow_id);
 
                 $data['user_firstName'] = $userId->firstName;
+                $data['avatar'] = $userId->avatar;
                 $data['follow_firstName'] = $follow_id->firstName;
                 $data['type'] = 'Follow';
                 $data['timestamp'] = $data->created_at->diffForHumans();
@@ -200,6 +203,7 @@ class User extends Authenticatable
                                             ->count();
 
                 $data['firstName'] = $user->firstName;
+                $data['avatar'] = $user->avatar;
                 $data['count_learned_words'] = $count_learned_words;
                 $data['count_total_words'] = $count_total_words;
                 $data['quiz_title'] = $quiz->title;
@@ -217,6 +221,7 @@ class User extends Authenticatable
                     $follow_id = self::find($data->follow_id);
 
                     $data['user_firstName'] = $userId->firstName;
+                    $data['avatar'] = $userId->avatar;
                     $data['follow_firstName'] = $follow_id->firstName;
                     $data['type'] = 'Follow';
                     $data['timestamp'] = $data->created_at->diffForHumans();

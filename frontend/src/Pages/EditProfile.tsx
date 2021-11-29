@@ -12,6 +12,7 @@ const EditProfile = () => {
   const [passwordMatch, setPasswordMatch] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string>("");
+  const [avatar, setAvatar] = useState("");
   const {
     register,
     handleSubmit,
@@ -28,6 +29,7 @@ const EditProfile = () => {
         lastName: details.data.lastName,
         email: details.data.email,
       });
+      setAvatar(details.data.avatar);
       setIsLoading(false);
     })();
   }, [reset]);
@@ -62,7 +64,11 @@ const EditProfile = () => {
           <div className="ui segment raised padded">
             <img
               className="ui medium rounded image centered"
-              src="https://react.semantic-ui.com/images/avatar/large/daniel.jpg"
+              src={
+                avatar
+                  ? `http://127.0.0.1:8000/storage/${avatar}`
+                  : `https://www.chocolatebayou.org/wp-content/uploads/No-Image-Person-1536x1536.jpeg`
+              }
               alt="Profile Pic"
             />
           </div>

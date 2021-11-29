@@ -31,7 +31,11 @@ const Users = () => {
               <div className="ui fluid card">
                 <div className="image">
                   <img
-                    src="https://react.semantic-ui.com/images/avatar/large/daniel.jpg"
+                    src={
+                      item.avatar
+                        ? `http://127.0.0.1:8000/storage/${item.avatar}`
+                        : `https://www.chocolatebayou.org/wp-content/uploads/No-Image-Person-1536x1536.jpeg`
+                    }
                     alt="Profile Pic"
                   />
                 </div>
