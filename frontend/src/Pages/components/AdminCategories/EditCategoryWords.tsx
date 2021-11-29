@@ -69,7 +69,6 @@ const EditCategoryWords = () => {
                 placeholder="Word"
                 {...register("word", {
                   required: "Word is required",
-                  min: 100,
                 })}
               />
               {errors.word && (
@@ -84,7 +83,6 @@ const EditCategoryWords = () => {
                 placeholder="Choice"
                 {...register("choices[0].value", {
                   required: "Choice is required",
-                  min: 100,
                 })}
               />
             </div>
@@ -105,7 +103,6 @@ const EditCategoryWords = () => {
                 placeholder="Choice"
                 {...register("choices[1].value", {
                   required: "Choice is required",
-                  min: 100,
                 })}
               />
             </div>
@@ -126,7 +123,6 @@ const EditCategoryWords = () => {
                 placeholder="Choice"
                 {...register("choices[2].value", {
                   required: "Choice is required",
-                  min: 100,
                 })}
               />
             </div>
@@ -147,7 +143,6 @@ const EditCategoryWords = () => {
                 placeholder="Choice"
                 {...register("choices[3].value", {
                   required: "Choice is required",
-                  min: 100,
                 })}
               />
             </div>
