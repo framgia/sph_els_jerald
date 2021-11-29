@@ -44,7 +44,6 @@ const EditCategory = () => {
                 placeholder="Title"
                 {...register("title", {
                   required: "Title is required",
-                  min: 100,
                 })}
               />
               {errors.title && (
@@ -57,7 +56,6 @@ const EditCategory = () => {
                 placeholder="Description"
                 {...register("description", {
                   required: "Description is required",
-                  min: 250,
                 })}
               />
               {errors.description && (
