@@ -65,10 +65,16 @@ class AdminQuizController extends Controller
      */
      public function updateAdminQuiz(Quiz $quiz, Request $request)
     {
-        $attributes = $request->validate([
-            'title' => 'required',
-            'description' => 'required',
+        $validator = Validator::make($request->all(), [
+            'title' => ['required'],
+            'description' => ['required'],
         ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+
+        $attributes = $validator->validated();
 
         $quiz->update($attributes);
 
