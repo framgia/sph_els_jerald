@@ -7,15 +7,22 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class AdminAuthenticationController extends Controller
 {
     public function signinAdmin(Request $request)
     {
-        $attributes = $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
+        $validator = Validator::make($request->all(), [
+            'email' => ['required', 'email'],
+            'password' => ['required'],
         ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+
+        $attributes = $validator->validated();
 
         $user = User::where('email', $attributes['email'])
                     ->where('isAdmin', 1)
