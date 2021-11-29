@@ -294,24 +294,27 @@ class UserController extends Controller
 
         $attributes = $validator->validated();
 
-        $user = User::find(auth()->user()->id);
-
-        if ($user->avatar) {
-            Storage::delete($user->avatar);
-        }
-
-        $path = $request->file('avatar')->store('avatars');
-
         $data = [
             'firstName' => $attributes['firstName'],
             'middleName' => $attributes['middleName'],
             'lastName' => $attributes['lastName'],
             'email' => $attributes['email'],
-            'avatar' => $path,
         ];
 
         if ($attributes['password']) {
             $data['password'] = bcrypt($attributes['password']);
+        }
+
+        if ($request->file('avatar')) {
+            $user = User::find(auth()->user()->id);
+
+            if ($user->avatar) {
+                Storage::delete($user->avatar);
+            }
+
+            $path = $request->file('avatar')->store('avatars');
+
+            $data['avatar'] = $path;
         }
 
         $user = User::where('id', auth()->user()->id)->update($data);
