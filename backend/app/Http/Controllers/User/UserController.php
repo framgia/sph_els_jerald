@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
@@ -284,6 +285,7 @@ class UserController extends Controller
             'lastName' => ['required', 'max:255'],
             'email' => ['required', 'email', 'max:255', Rule::unique('users', 'email')->ignore(auth()->user()->id)],
             'password' => ['nullable', 'min:7', 'max:255'],
+            'avatar' => ['image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
         ]);
 
         if ($validator->fails()) {
@@ -292,11 +294,20 @@ class UserController extends Controller
 
         $attributes = $validator->validated();
 
+        $user = User::find(auth()->user()->id);
+
+        if ($user->avatar) {
+            Storage::delete($user->avatar);
+        }
+
+        $path = $request->file('avatar')->store('avatars');
+
         $data = [
             'firstName' => $attributes['firstName'],
             'middleName' => $attributes['middleName'],
             'lastName' => $attributes['lastName'],
             'email' => $attributes['email'],
+            'avatar' => $path,
         ];
 
         if ($attributes['password']) {

@@ -36,7 +36,11 @@ const LearnedWords = () => {
           <div className="ui segment raised padded">
             <img
               className="ui small rounded image centered"
-              src="https://react.semantic-ui.com/images/avatar/large/daniel.jpg"
+              src={
+                data.details.user.avatar
+                  ? `http://127.0.0.1:8000/storage/${data.details.user.avatar}`
+                  : `https://www.chocolatebayou.org/wp-content/uploads/No-Image-Person-1536x1536.jpeg`
+              }
               alt="Profile Pic"
             />
             <h1 className="ui huge header centered">{fullName}</h1>

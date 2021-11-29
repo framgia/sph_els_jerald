@@ -13,6 +13,7 @@ export type Activity = {
   follow_id?: number;
   type: string;
   timestamp: string;
+  avatar: string;
 };
 
 export const ActivityInitial = {
@@ -30,4 +31,5 @@ export const ActivityInitial = {
   follow_id: 0,
   type: "",
   timestamp: "",
+  avatar: "",
 };
