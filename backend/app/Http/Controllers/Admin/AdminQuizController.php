@@ -100,13 +100,18 @@ class AdminQuizController extends Controller
      */
      public function storeAdminQuizQuestion(Request $request, Quiz $quiz)
     {
-
-        $attributes = $request->validate([
-            'word' => 'required',
-            'choices' => 'required|array|min:4',
-            'choices.*.value' => 'required|string',
-            'choices.*.is_correct' => 'required|boolean',
+        $validator = Validator::make($request->all(), [
+            'word' => ['required'],
+            'choices' => ['required', 'array', 'min:4'],
+            'choices.*.value' => ['required', 'string'],
+            'choices.*.is_correct' => ['required', 'boolean'],
         ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+
+        $attributes = $validator->validated();
 
         $question = Question::create([
             'word' => $attributes['word'],
