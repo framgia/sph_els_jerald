@@ -65,8 +65,8 @@ const LearnedLessons = () => {
                 </tr>
               </thead>
               <tbody>
-                {data.details.learned_lessons.map((item) => (
-                  <tr>
+                {data.details.learned_lessons.map((item, index) => (
+                  <tr key={index}>
                     <td>{item.title}</td>
                     <td>{item.description}</td>
                     <td className="single line">
