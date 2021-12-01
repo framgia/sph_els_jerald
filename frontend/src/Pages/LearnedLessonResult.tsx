@@ -70,8 +70,8 @@ const LearnedLessonResult = () => {
                 </tr>
               </thead>
               <tbody>
-                {data.details.results.map((item) => (
-                  <tr>
+                {data.details.results.map((item, index) => (
+                  <tr key={index}>
                     <td>{item.word}</td>
                     <td>{item.answer}</td>
                     <td className="center aligned">
