@@ -39,7 +39,7 @@ const Profile = () => {
               className="ui small rounded image centered"
               src={
                 data.details.user.avatar
-                  ? `http://127.0.0.1:8000/storage/${data.details.user.avatar}`
+                  ? `${process.env.REACT_APP_API_URL}/storage/${data.details.user.avatar}`
                   : `https://www.chocolatebayou.org/wp-content/uploads/No-Image-Person-1536x1536.jpeg`
               }
               alt="Profile Pic"
@@ -90,7 +90,7 @@ const Profile = () => {
                     <img
                       src={
                         item.avatar
-                          ? `http://127.0.0.1:8000/storage/${item.avatar}`
+                          ? `${process.env.REACT_APP_API_URL}/storage/${item.avatar}`
                           : `https://www.chocolatebayou.org/wp-content/uploads/No-Image-Person-1536x1536.jpeg`
                       }
                       alt="Profile Pic"
