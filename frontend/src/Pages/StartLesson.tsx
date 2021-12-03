@@ -39,7 +39,7 @@ const Lesson = () => {
     });
 
     if (isCorrect === 1) {
-      setScore(score + 1);
+      setScore((prevState) => prevState + 1);
     }
 
     const nextQuestion = currentQuestion + 1;
