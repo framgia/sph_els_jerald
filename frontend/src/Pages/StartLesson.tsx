@@ -38,7 +38,7 @@ const Lesson = () => {
       return prevAnswer?.concat(answer);
     });
 
-    if (isCorrect === 1) {
+    if (isCorrect) {
       setScore((prevState) => prevState + 1);
     }
 
@@ -47,6 +47,7 @@ const Lesson = () => {
       setCurrentQuestion(nextQuestion);
     } else {
       setShowScore(true);
+      // console.log(answers);
     }
   };
 
