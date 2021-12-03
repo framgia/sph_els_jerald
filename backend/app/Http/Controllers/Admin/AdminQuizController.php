@@ -89,7 +89,7 @@ class AdminQuizController extends Controller
      */
      public function showAdminQuiz(Quiz $quiz)
     {
-        return Quiz::find($quiz);
+        return Quiz::find($quiz->id);
     }
 
     /**

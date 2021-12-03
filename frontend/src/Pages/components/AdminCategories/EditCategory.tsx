@@ -19,8 +19,8 @@ const EditCategory = () => {
     (async () => {
       const quiz = await fetchAdminQuiz(Number(quizId));
       reset({
-        title: quiz.data[0].title,
-        description: quiz.data[0].description,
+        title: quiz.data.title,
+        description: quiz.data.description,
       });
     })();
   }, [quizId, reset]);
