@@ -256,7 +256,7 @@ class User extends Authenticatable
         $learned_words_array = array();
 
         foreach ($learned_words as $learned_word) {
-            if ($learned_word->is_correct === 1) {
+            if ($learned_word->is_correct) {
                 $question = Question::find($learned_word->question_id);
                 $quiz = Quiz::find($question->quiz_id);
 
