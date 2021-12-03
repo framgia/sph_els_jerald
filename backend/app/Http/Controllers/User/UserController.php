@@ -305,16 +305,18 @@ class UserController extends Controller
             $data['password'] = bcrypt($attributes['password']);
         }
 
-        if ($request->file('avatar')) {
-            $user = User::find(auth()->user()->id);
+        if (env('APP_ENV') === "local") {
+            if ($request->file('avatar')) {
+                $user = User::find(auth()->user()->id);
 
-            if ($user->avatar) {
-                Storage::delete($user->avatar);
+                if ($user->avatar) {
+                    Storage::delete($user->avatar);
+                }
+
+                $path = $request->file('avatar')->store('avatars');
+
+                $data['avatar'] = $path;
             }
-
-            $path = $request->file('avatar')->store('avatars');
-
-            $data['avatar'] = $path;
         }
 
         $user = User::where('id', auth()->user()->id)->update($data);
