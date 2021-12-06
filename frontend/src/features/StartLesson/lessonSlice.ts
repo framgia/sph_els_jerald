@@ -5,13 +5,13 @@ import { Quiz, QuizInitial } from "../../Types/Quiz";
 import { Question, QuestionInitial } from "../../Types/Question";
 
 export interface LessonState {
-  quiz: Quiz[];
+  quiz: Quiz;
   questions: Question[];
   status: "idle" | "loading" | "failed";
 }
 
 const initialState: LessonState = {
-  quiz: [QuizInitial],
+  quiz: QuizInitial,
   questions: [QuestionInitial],
   status: "idle",
 };

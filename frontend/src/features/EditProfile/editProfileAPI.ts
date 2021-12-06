@@ -19,8 +19,10 @@ export const updateSelfDetails = (data: {
   form.append("lastName", data.lastName);
   form.append("email", data.email);
   form.append("password", data.password);
-  if (data.avatar[0]) {
-    form.append("avatar", data.avatar[0]);
+  if (process.env.REACT_APP_ENV === "local") {
+    if (data.avatar[0]) {
+      form.append("avatar", data.avatar[0]);
+    }
   }
   return axios
     .post(`/api/users/details/update`, form)

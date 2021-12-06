@@ -6,7 +6,7 @@ import classes from "./MainNavigationAdmin.module.css";
 
 const MainNavigationAdmin = () => {
   const history = useHistory();
-  const onLogoutHandler = async () => {
+  const onLogoutHandlerAdmin = async () => {
     await signOutAdmin();
     CookieService.remove("adminToken");
     history.push("/admin");
@@ -32,7 +32,7 @@ const MainNavigationAdmin = () => {
         </NavLink>
 
         <div className="right menu">
-          <div className="link item" onClick={onLogoutHandler}>
+          <div className="link item" onClick={onLogoutHandlerAdmin}>
             Logout
           </div>
         </div>

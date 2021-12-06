@@ -38,8 +38,8 @@ const Lesson = () => {
       return prevAnswer?.concat(answer);
     });
 
-    if (isCorrect === 1) {
-      setScore(score + 1);
+    if (isCorrect) {
+      setScore((prevState) => prevState + 1);
     }
 
     const nextQuestion = currentQuestion + 1;
@@ -47,6 +47,7 @@ const Lesson = () => {
       setCurrentQuestion(nextQuestion);
     } else {
       setShowScore(true);
+      // console.log(answers);
     }
   };
 
@@ -74,12 +75,8 @@ const Lesson = () => {
         <div className="ui container piled segment">
           <div className="ui grid">
             <div className="sixteen wide column centered">
-              {data.quiz.map((item) => (
-                <Fragment key={item.id}>
-                  <h2>{item.title}</h2>
-                  <p>{item.description}</p>
-                </Fragment>
-              ))}
+              <h2>{data.quiz.title}</h2>
+              <p>{data.quiz.description}</p>
               <h4>
                 You scored {score} out of {data.questions.length}
               </h4>
@@ -94,13 +91,11 @@ const Lesson = () => {
         </div>
       ) : (
         <Fragment>
-          {data.status === "idle" && data.quiz[0] && data.questions[0] && (
+          {data.status === "idle" && data.quiz && data.questions[0] && (
             <div className="ui container piled segment">
               <div className="ui grid">
                 <div className="eight wide column centered">
-                  {data.quiz.map((item) => (
-                    <h2 key={item.id}>{item.title}</h2>
-                  ))}
+                  <h2>{data.quiz.title}</h2>
                   <h1>{data.questions[currentQuestion].word}</h1>
                 </div>
                 <div className="eight wide column centered">

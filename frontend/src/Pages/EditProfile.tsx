@@ -202,18 +202,21 @@ const EditProfile = () => {
                 </div>
               </div>
 
-              <div className="field">
-                <label>Profile picture</label>
-                <div className="ui left icon input">
-                  <i className="user icon"></i>
-                  <input
-                    type="file"
-                    accept="image/*"
-                    placeholder="Avatar"
-                    {...register("avatar", {})}
-                  />
+              {process.env.REACT_APP_ENV === "local" && (
+                <div className="field">
+                  <label>Profile picture</label>
+                  <div className="ui left icon input">
+                    <i className="user icon"></i>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      placeholder="Avatar"
+                      {...register("avatar", {})}
+                    />
+                  </div>
                 </div>
-              </div>
+              )}
+
               <button className="ui primary button" type="submit">
                 Update profile
               </button>
