@@ -89,7 +89,7 @@ const EditProfile = () => {
                       })}
                     />
                     {errors.firstName && (
-                      <p className="ui mini message">
+                      <p className="ui mini red message">
                         {errors.firstName.message}
                       </p>
                     )}
@@ -104,7 +104,7 @@ const EditProfile = () => {
                       })}
                     />
                     {errors.middleName && (
-                      <p className="ui mini message">
+                      <p className="ui mini red message">
                         {errors.middleName.message}
                       </p>
                     )}
@@ -119,7 +119,7 @@ const EditProfile = () => {
                       })}
                     />
                     {errors.lastName && (
-                      <p className="ui mini message">
+                      <p className="ui mini red message">
                         {errors.lastName.message}
                       </p>
                     )}
@@ -144,9 +144,9 @@ const EditProfile = () => {
                   />
                 </div>
                 {errors.email && (
-                  <p className="ui mini message">{errors.email.message}</p>
+                  <p className="ui mini red message">{errors.email.message}</p>
                 )}
-                {error && <p className="ui mini message">{error}</p>}
+                {error && <p className="ui mini red message">{error}</p>}
               </div>
 
               <div className="field">
@@ -167,12 +167,12 @@ const EditProfile = () => {
                       />
                     </div>
                     {errors.password && (
-                      <p className="ui mini message">
+                      <p className="ui mini red message">
                         {errors.password.message}
                       </p>
                     )}
                     {!passwordMatch && (
-                      <p className="ui mini message">Password must match</p>
+                      <p className="ui mini red message">Password must match</p>
                     )}
                   </div>
                   <div className="field">
@@ -191,12 +191,12 @@ const EditProfile = () => {
                       />
                     </div>
                     {errors.confirmPassword && (
-                      <p className="ui mini message">
+                      <p className="ui mini red message">
                         {errors.confirmPassword.message}
                       </p>
                     )}
                     {!passwordMatch && (
-                      <p className="ui mini message">Password must match</p>
+                      <p className="ui mini red message">Password must match</p>
                     )}
                   </div>
                 </div>

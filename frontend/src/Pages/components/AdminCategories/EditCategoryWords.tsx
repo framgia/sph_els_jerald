@@ -72,7 +72,7 @@ const EditCategoryWords = () => {
                 })}
               />
               {errors.word && (
-                <p className="ui mini message">{errors.word.message}</p>
+                <p className="ui mini red message">{errors.word.message}</p>
               )}
             </div>
 
