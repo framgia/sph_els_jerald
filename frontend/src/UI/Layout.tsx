@@ -8,12 +8,13 @@ const Layout: React.FC = (props) => {
     <Fragment>
       <MainNavigation />
       <main className={classes.main}>{props.children}</main>
-      <footer>
-        <div className="ui centered vertical footer segment form-page">
+      <footer className={classes.footer}>
+        {/* <div className="ui centered vertical footer segment form-page">
           <div className="ui container">
             E-learning System 2021. All Rights Reserved
           </div>
-        </div>
+        </div> */}
+        <div>E-learning System 2021. All Rights Reserved</div>
       </footer>
     </Fragment>
   );

@@ -1,4 +1,15 @@
 .main {
-  margin: 5rem auto;
+  margin: 0 auto;
+  padding-top: 5rem;
+  padding-bottom: 5rem;
   width: 90%;
+  min-height: calc(100vh - 62.19px - 59.98px);
+}
+
+.footer {
+  bottom: 0;
+  width: 100%;
+  color: black;
+  text-align: center;
+  padding: 20px;
 }
