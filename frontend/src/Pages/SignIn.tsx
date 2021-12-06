@@ -52,7 +52,7 @@ const SignIn = () => {
                 />
               </div>
               {errors.email && (
-                <p className="ui mini message">{errors.email.message}</p>
+                <p className="ui mini red message">{errors.email.message}</p>
               )}
             </div>
             <div className="field">
@@ -71,9 +71,9 @@ const SignIn = () => {
                 />
               </div>
               {errors.password && (
-                <p className="ui mini message">{errors.password.message}</p>
+                <p className="ui mini red message">{errors.password.message}</p>
               )}
-              {error && <p className="ui mini message">{error}</p>}
+              {error && <p className="ui mini red message">{error}</p>}
             </div>
 
             <button className="ui fluid large primary submit button">

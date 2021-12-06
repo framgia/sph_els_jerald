@@ -47,7 +47,7 @@ const EditCategory = () => {
                 })}
               />
               {errors.title && (
-                <p className="ui mini message">{errors.title.message}</p>
+                <p className="ui mini red message">{errors.title.message}</p>
               )}
             </div>
             <div className="field">
@@ -59,7 +59,9 @@ const EditCategory = () => {
                 })}
               />
               {errors.description && (
-                <p className="ui mini message">{errors.description.message}</p>
+                <p className="ui mini red message">
+                  {errors.description.message}
+                </p>
               )}
             </div>
 
