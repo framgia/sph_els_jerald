@@ -1,10 +1,14 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
 import { fetchQuiz } from "./categoriesAPI";
-import { Quiz } from "../../Types/Quiz";
 
 export interface QuizState {
-  quizzes: Quiz[];
+  quizzes: {
+    id: number;
+    title: string;
+    description: string;
+    already_taken: string;
+  }[];
   status: "idle" | "loading" | "failed";
 }
 
