@@ -45,12 +45,18 @@ export const lessonSlice = createSlice({
         state.status = "idle";
         state.quiz = action.payload;
       })
+      .addCase(fetchQuizDetailAsync.rejected, (state) => {
+        state.status = "failed";
+      })
       .addCase(fetchQuestionsAsync.pending, (state) => {
         state.status = "loading";
       })
       .addCase(fetchQuestionsAsync.fulfilled, (state, action) => {
         state.status = "idle";
         state.questions = action.payload;
+      })
+      .addCase(fetchQuestionsAsync.rejected, (state) => {
+        state.status = "failed";
       });
   },
 });

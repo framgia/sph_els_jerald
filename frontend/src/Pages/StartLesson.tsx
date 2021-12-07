@@ -47,7 +47,6 @@ const Lesson = () => {
       setCurrentQuestion(nextQuestion);
     } else {
       setShowScore(true);
-      // console.log(answers);
     }
   };
 
@@ -68,6 +67,13 @@ const Lesson = () => {
       {data.status === "loading" && (
         <div className="ui active dimmer">
           <div className="ui loader"></div>
+        </div>
+      )}
+
+      {data.status === "failed" && (
+        <div className="ui red message">
+          <div className="header">Error 404: Not Found</div>
+          <p>We cannot find this category or possibly already taken.</p>
         </div>
       )}
 
