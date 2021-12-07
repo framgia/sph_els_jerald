@@ -18,7 +18,8 @@ class QuizController extends Controller
      */
     public function index()
     {
-        $quizzes = Quiz::all();
+        $quizzesUnsorted = Quiz::all();
+        $quizzes = $quizzesUnsorted->sortBy('id');
 
         $quizzesArray = array();
 
