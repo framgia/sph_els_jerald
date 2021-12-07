@@ -6,7 +6,6 @@ import {
   selectQuizzes,
   fetchQuizAsync,
 } from "../../../features/Categories/categoriesSlice";
-import { Quiz } from "../../../Types/Quiz";
 
 const CategoriesList = () => {
   const data = useAppSelector(selectQuizzes);
@@ -27,17 +26,31 @@ const CategoriesList = () => {
 
       {data.quizzes &&
         data.status === "idle" &&
-        data.quizzes.map((item: Quiz) => (
-          <div className="column" key={item.id}>
-            <div className="ui segment raised very padded">
-              <h2 className="ui header">{item.title}</h2>
-              <p>{item.description}</p>
-              <Link to={`/categories/${item.id}`} className="ui primary button">
-                Start Lesson
-              </Link>
+        data.quizzes.map(
+          (item: {
+            id: number;
+            title: string;
+            description: string;
+            already_taken: string;
+          }) => (
+            <div className="column" key={item.id}>
+              <div className="ui segment raised very padded">
+                <h2 className="ui header">{item.title}</h2>
+                <p>{item.description}</p>
+                {item.already_taken ? (
+                  <button className="ui disabled button">Already taken</button>
+                ) : (
+                  <Link
+                    to={`/categories/${item.id}`}
+                    className="ui primary button"
+                  >
+                    Start Lesson
+                  </Link>
+                )}
+              </div>
             </div>
-          </div>
-        ))}
+          )
+        )}
 
       {data.status === "idle" && !data.quizzes[0] && (
         <h2 className="ui message">No categories found</h2>

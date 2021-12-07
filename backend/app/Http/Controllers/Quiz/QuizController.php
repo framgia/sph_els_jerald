@@ -17,13 +17,25 @@ class QuizController extends Controller
      */
     public function index()
     {
-        $quizLogs = QuizLog::where('user_id', auth()->user()->id)->pluck('quiz_id');
-  
-        if ($quizLogs) {
-            return Quiz::whereNotIn('id', $quizLogs)->get();
+        $quizzes = Quiz::all();
+
+        $quizzesArray = array();
+
+        foreach ($quizzes as $quiz) {
+            $quizLog = QuizLog::where('user_id', auth()->user()->id)
+                            ->where('quiz_id', $quiz->id)
+                            ->first();
+
+            if ($quizLog) {
+                $quiz['already_taken'] = true;
+            } else {
+                $quiz['already_taken'] = false;
+            }
+
+            array_push($quizzesArray, $quiz);
         }
 
-        return Quiz::all();
+        return $quizzesArray;
     }
 
     /**
