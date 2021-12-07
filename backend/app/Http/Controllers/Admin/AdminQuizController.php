@@ -19,7 +19,7 @@ class AdminQuizController extends Controller
      */
      public function getAdminQuizzes()
     {
-        return Quiz::simplePaginate(5);
+        return Quiz::latest()->simplePaginate(5);
     }
 
     /**
