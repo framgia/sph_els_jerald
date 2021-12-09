@@ -8,6 +8,7 @@ import classes from "./AdminSignIn.module.css";
 const AdminSignIn = () => {
   const history = useHistory();
   const [error, setError] = useState<string>("");
+  const [isLoading, setIsLoading] = useState(false);
   const {
     register,
     handleSubmit,
@@ -18,13 +19,19 @@ const AdminSignIn = () => {
     const response = await signInAdmin(data);
 
     if (response?.status === 401) {
+      setIsLoading(false);
       setError(response.data.message);
     } else if (response?.status === 201) {
+      setIsLoading(false);
       setError("");
       CookieService.set("adminToken", response.data.adminToken, { path: "/" });
 
       history.push("/admin/categories");
     }
+  };
+
+  const signInAdminHandler = () => {
+    setIsLoading(true);
   };
 
   return (
@@ -80,7 +87,12 @@ const AdminSignIn = () => {
               {error && <p className="ui mini red message">{error}</p>}
             </div>
 
-            <button className="ui fluid large primary submit button">
+            <button
+              className={`ui fluid large primary submit button ${
+                isLoading && "loading disabled"
+              }`}
+              onClick={signInAdminHandler}
+            >
               Sign In
             </button>
           </form>
