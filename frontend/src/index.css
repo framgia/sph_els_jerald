@@ -23,3 +23,11 @@ code {
   justify-content: center;
   align-items: center;
 }
+
+#root {
+  /* This is important. Look more into dispaly flex and flex-direction  */
+  display: flex;
+  flex-direction: column;
+  /* Set min height of your container so it doesn't go up when content is small */
+  min-height: 100vh;
+}

@@ -8,12 +8,8 @@ const LayoutAdmin: React.FC = (props) => {
     <Fragment>
       <MainNavigationAdmin />
       <main className={classes.main}>{props.children}</main>
-      <footer>
-        <div className="ui centered vertical footer segment form-page">
-          <div className="ui container">
-            E-learning System 2021. All Rights Reserved
-          </div>
-        </div>
+      <footer className={classes.footer}>
+        <div>E-learning System 2021. All Rights Reserved</div>
       </footer>
     </Fragment>
   );
