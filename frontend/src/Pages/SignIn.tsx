@@ -8,6 +8,7 @@ import classes from "./SignIn.module.css";
 const SignIn = () => {
   const history = useHistory();
   const [error, setError] = useState<string>("");
+  const [isLoading, setIsLoading] = useState(false);
   const {
     register,
     handleSubmit,
@@ -18,13 +19,19 @@ const SignIn = () => {
     const response = await signInUser(data);
 
     if (response?.status === 401) {
+      setIsLoading(false);
       setError(response.data.message);
     } else if (response?.status === 201) {
+      setIsLoading(false);
       setError("");
       CookieService.set("token", response.data.token, { path: "/" });
 
       history.push("/dashboard");
     }
+  };
+
+  const signInHandler = () => {
+    setIsLoading(true);
   };
 
   return (
@@ -76,7 +83,12 @@ const SignIn = () => {
               {error && <p className="ui mini red message">{error}</p>}
             </div>
 
-            <button className="ui fluid large primary submit button">
+            <button
+              className={`ui fluid large primary submit button ${
+                isLoading && "loading disabled"
+              }`}
+              onClick={signInHandler}
+            >
               Sign In
             </button>
             <Link to="/signup" className="ui fluid large basic button">
