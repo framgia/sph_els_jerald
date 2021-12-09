@@ -8,6 +8,7 @@ const SignUp = () => {
   const history = useHistory();
   const [error, setError] = useState<string>("");
   const [passwordMatch, setPasswordMatch] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const {
     register,
     handleSubmit,
@@ -26,11 +27,14 @@ const SignUp = () => {
     setPasswordMatch(passwordMatch);
 
     if (passwordMatch) {
+      setIsLoading(true);
       const response = await registerUser(data);
 
       if (response?.status === 422) {
+        setIsLoading(false);
         setError(response.data.email);
       } else if (response?.status === 201) {
+        setIsLoading(false);
         setError("");
 
         history.push("/signin");
@@ -157,7 +161,11 @@ const SignUp = () => {
               )}
             </div>
 
-            <button className="ui fluid large primary submit button">
+            <button
+              className={`ui fluid large primary submit button ${
+                isLoading && "loading disabled"
+              }`}
+            >
               Sign Up
             </button>
             <Link to="/sigin" className="ui fluid large basic button">
