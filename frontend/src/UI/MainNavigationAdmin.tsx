@@ -1,13 +1,17 @@
 import { useHistory, NavLink } from "react-router-dom";
 import { signOutAdmin } from "../features/AdminSignOut/adminSignOutAPI";
 import CookieService from "../Services/CookieService";
+import { useState } from "react";
 
 import classes from "./MainNavigationAdmin.module.css";
 
 const MainNavigationAdmin = () => {
   const history = useHistory();
+  const [isLogoutAdminLoading, setLogoutAdminIsLoading] = useState(false);
   const onLogoutHandlerAdmin = async () => {
+    setLogoutAdminIsLoading(true);
     await signOutAdmin();
+    setLogoutAdminIsLoading(false);
     CookieService.remove("adminToken");
     history.push("/admin");
   };
@@ -32,8 +36,15 @@ const MainNavigationAdmin = () => {
         </NavLink>
 
         <div className="right menu">
-          <div className="link item" onClick={onLogoutHandlerAdmin}>
-            Logout
+          <div
+            className={`${isLogoutAdminLoading ? "item" : "link item"}`}
+            onClick={onLogoutHandlerAdmin}
+          >
+            {isLogoutAdminLoading ? (
+              <div className="ui tiny active inline loader"></div>
+            ) : (
+              "Sign out"
+            )}
           </div>
         </div>
       </div>
