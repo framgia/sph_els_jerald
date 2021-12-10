@@ -72,14 +72,13 @@ const Lesson = () => {
 
       {data.status === "failed" && (
         <div className="ui red message">
-          <div className="header">{data.errCode}</div>
-          {data.errCode === "Request failed with status code 403" && (
-            <p>Course already taken</p>
-          )}
+          <div className="header">
+            Error {data.errCode === 403 && "Forbidden"}{" "}
+            {data.errCode === 404 && "Not Found"}
+          </div>
+          {data.errCode === 403 && <p>Course already taken</p>}
 
-          {data.errCode === "Request failed with status code 404" && (
-            <p>We cannot find this category</p>
-          )}
+          {data.errCode === 404 && <p>We cannot find this category</p>}
         </div>
       )}
 
