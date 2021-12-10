@@ -8,6 +8,7 @@ export interface LessonState {
   quiz: Quiz;
   questions: Question[];
   status: "idle" | "loading" | "failed";
+  errCode?: string;
 }
 
 const initialState: LessonState = {
@@ -45,8 +46,9 @@ export const lessonSlice = createSlice({
         state.status = "idle";
         state.quiz = action.payload;
       })
-      .addCase(fetchQuizDetailAsync.rejected, (state) => {
+      .addCase(fetchQuizDetailAsync.rejected, (state, action) => {
         state.status = "failed";
+        state.errCode = action.error.message;
       })
       .addCase(fetchQuestionsAsync.pending, (state) => {
         state.status = "loading";
@@ -55,8 +57,9 @@ export const lessonSlice = createSlice({
         state.status = "idle";
         state.questions = action.payload;
       })
-      .addCase(fetchQuestionsAsync.rejected, (state) => {
+      .addCase(fetchQuestionsAsync.rejected, (state, action) => {
         state.status = "failed";
+        state.errCode = action.error.message;
       });
   },
 });

@@ -73,7 +73,7 @@ class QuizController extends Controller
                         ->where('quiz_id', $quiz->id)
                         ->first();
         if ($quizLog) {
-            return response()->json(['Message' => 'Not Found'], 404);
+            return response()->json(['Message' => 'Forbidden'], 403);
         } else {
             return Quiz::find($quiz->id);
         }
@@ -124,7 +124,7 @@ class QuizController extends Controller
                         ->where('quiz_id', $quiz->id)
                         ->first();
         if ($quizLog) {
-            return response()->json(['Message' => 'Not Found'], 404);
+            return response()->json(['Message' => 'Forbidden'], 403);
         } else {
             return $quiz->questions()->with('choices')->get();
         }
