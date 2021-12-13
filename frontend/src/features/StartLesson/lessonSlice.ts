@@ -8,6 +8,7 @@ export interface LessonState {
   quiz: Quiz;
   questions: Question[];
   status: "idle" | "loading" | "failed";
+  errCode?: number;
 }
 
 const initialState: LessonState = {
@@ -18,17 +19,31 @@ const initialState: LessonState = {
 
 export const fetchQuizDetailAsync = createAsyncThunk(
   "lesson/fetchQuizDetail",
-  async (quizId: number) => {
-    const response = await fetchQuizDetail(quizId);
-    return response.data;
+  async (quizId: number, { rejectWithValue }) => {
+    try {
+      const response = await fetchQuizDetail(quizId);
+      return response.data;
+    } catch (error: any) {
+      if (!error.response) {
+        throw error;
+      }
+      return rejectWithValue(error.response.status);
+    }
   }
 );
 
 export const fetchQuestionsAsync = createAsyncThunk(
   "lesson/fetchQuestions",
-  async (quizId: number) => {
-    const response = await fetchQuestions(quizId);
-    return response.data;
+  async (quizId: number, { rejectWithValue }) => {
+    try {
+      const response = await fetchQuestions(quizId);
+      return response.data;
+    } catch (error: any) {
+      if (!error.response) {
+        throw error;
+      }
+      return rejectWithValue(error.response.status);
+    }
   }
 );
 
@@ -45,12 +60,20 @@ export const lessonSlice = createSlice({
         state.status = "idle";
         state.quiz = action.payload;
       })
+      .addCase(fetchQuizDetailAsync.rejected, (state, action) => {
+        state.status = "failed";
+        state.errCode = Number(action.payload);
+      })
       .addCase(fetchQuestionsAsync.pending, (state) => {
         state.status = "loading";
       })
       .addCase(fetchQuestionsAsync.fulfilled, (state, action) => {
         state.status = "idle";
         state.questions = action.payload;
+      })
+      .addCase(fetchQuestionsAsync.rejected, (state, action) => {
+        state.status = "failed";
+        state.errCode = Number(action.payload);
       });
   },
 });

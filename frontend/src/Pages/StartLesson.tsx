@@ -47,7 +47,6 @@ const Lesson = () => {
       setCurrentQuestion(nextQuestion);
     } else {
       setShowScore(true);
-      // console.log(answers);
     }
   };
 
@@ -68,6 +67,18 @@ const Lesson = () => {
       {data.status === "loading" && (
         <div className="ui active dimmer">
           <div className="ui loader"></div>
+        </div>
+      )}
+
+      {data.status === "failed" && (
+        <div className="ui red message">
+          <div className="header">
+            Error {data.errCode === 403 && "Forbidden"}{" "}
+            {data.errCode === 404 && "Not Found"}
+          </div>
+          {data.errCode === 403 && <p>Course already taken</p>}
+
+          {data.errCode === 404 && <p>We cannot find this category</p>}
         </div>
       )}
 

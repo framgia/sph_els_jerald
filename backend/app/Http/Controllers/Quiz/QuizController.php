@@ -6,6 +6,7 @@ use App\Models\Quiz;
 use App\Models\QuizLog;
 use App\Models\Question;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 
 class QuizController extends Controller
@@ -17,7 +18,8 @@ class QuizController extends Controller
      */
     public function index()
     {
-        $quizzes = Quiz::all();
+        $quizzesUnsorted = Quiz::all();
+        $quizzes = $quizzesUnsorted->sortBy('id');
 
         $quizzesArray = array();
 
@@ -67,7 +69,14 @@ class QuizController extends Controller
      */
     public function show(Quiz $quiz)
     {
-        return Quiz::find($quiz->id);
+        $quizLog = QuizLog::where('user_id', auth()->user()->id)
+                        ->where('quiz_id', $quiz->id)
+                        ->first();
+        if ($quizLog) {
+            return response()->json(['Message' => 'Forbidden'], 403);
+        } else {
+            return Quiz::find($quiz->id);
+        }
     }
 
     /**
@@ -111,6 +120,14 @@ class QuizController extends Controller
      */
     public function getQuestions(Quiz $quiz)
     {
-        return $quiz->questions()->with('choices')->get();
+        $quizLog = QuizLog::where('user_id', auth()->user()->id)
+                        ->where('quiz_id', $quiz->id)
+                        ->first();
+        if ($quizLog) {
+            return response()->json(['Message' => 'Forbidden'], 403);
+        } else {
+            return $quiz->questions()->with('choices')->get();
+        }
+        
     }
 }
