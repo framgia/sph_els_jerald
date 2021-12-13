@@ -55,6 +55,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('users/unfollow/{user}', [UserController::class, 'unfollow'])->name('users.unfollow');
     Route::get('users/details', [UserController::class, 'showSelfDetails'])->name('users.self.details');
     Route::post('users/details/update', [UserController::class, 'updateSelfDetails'])->name('users.self.details.update');
+    Route::get('users/following/{user}', [UserController::class, 'showFollowing'])->name('users.following');
+    Route::get('users/followers/{user}', [UserController::class, 'showFollowers'])->name('users.followers');
 
     /**
      * Admin
