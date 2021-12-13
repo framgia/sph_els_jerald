@@ -42,6 +42,7 @@ export interface GetProfileState {
     activities: Activity[];
   };
   status: "idle" | "loading" | "failed";
+  error?: number;
 }
 
 const initialState: GetProfileState = {
@@ -60,9 +61,19 @@ const initialState: GetProfileState = {
 
 export const fetchGetProfileAsync = createAsyncThunk(
   "quizzes/fetchGetProfile",
-  async (userId: number) => {
-    const response = await fetchGetProfile(userId);
-    return response.data;
+  async (userId: number, { rejectWithValue }) => {
+    // const response = await fetchGetProfile(userId);
+    // return response.data;
+
+    try {
+      const response = await fetchGetProfile(userId);
+      return response.data;
+    } catch (error: any) {
+      if (!error.response) {
+        throw error;
+      }
+      return rejectWithValue(error.response.status);
+    }
   }
 );
 
@@ -78,6 +89,10 @@ export const getProfileSlice = createSlice({
       .addCase(fetchGetProfileAsync.fulfilled, (state, action) => {
         state.status = "idle";
         state.details = action.payload;
+      })
+      .addCase(fetchGetProfileAsync.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = Number(action.payload);
       });
   },
 });
