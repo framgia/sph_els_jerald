@@ -374,4 +374,64 @@ class User extends Authenticatable
 
         return $users_array;
     }
+
+    public static function getFollowing($user)
+    {
+        $following = Follow::where('user_id', $user->id)->get();
+
+        $count_total_followers = Follow::where('follow_id', $user->id)->count();
+
+        $count_total_following = Follow::where('user_id', $user->id)->count();
+
+        $following_array = array();
+
+        foreach ($following as $following) {
+            $following_user = User::latest()->find($following->follow_id);
+
+            $data['id'] = $following_user->id;
+            $data['firstName'] = $following_user->firstName;
+            $data['middleName'] = $following_user->middleName;
+            $data['lastName'] = $following_user->lastName;
+            $data['avatar'] = $following_user->avatar;
+
+            array_push($following_array, $data);
+        }
+
+        return [
+            'user' => $user,
+            'count_total_followers' => $count_total_followers,
+            'count_total_following' => $count_total_following,
+            'following' => $following_array,
+        ];
+    }
+
+    public static function getFollowers($user)
+    {
+        $followers = Follow::where('follow_id', $user->id)->get();
+
+        $count_total_followers = Follow::where('follow_id', $user->id)->count();
+
+        $count_total_following = Follow::where('user_id', $user->id)->count();
+
+        $follower_array = array();
+
+        foreach ($followers as $follower) {
+            $follower_user = User::latest()->find($follower->user_id);
+
+            $data['id'] = $follower_user->id;
+            $data['firstName'] = $follower_user->firstName;
+            $data['middleName'] = $follower_user->middleName;
+            $data['lastName'] = $follower_user->lastName;
+            $data['avatar'] = $follower_user->avatar;
+
+            array_push($follower_array, $data);
+        }
+
+        return [
+            'user' => $user,
+            'count_total_followers' => $count_total_followers,
+            'count_total_following' => $count_total_following,
+            'followers' => $follower_array,
+        ];
+    }
 }

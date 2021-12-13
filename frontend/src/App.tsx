@@ -22,6 +22,8 @@ import LearnedLessons from "./Pages/LearnedLessons";
 import LearnedLessonResult from "./Pages/LearnedLessonResult";
 import Users from "./Pages/Users";
 import EditProfile from "./Pages/EditProfile";
+import Following from "./Pages/Following";
+import Followers from "./Pages/Followers";
 
 // Routes
 import UserRoute from "./Routes/UserRoute";
@@ -48,6 +50,8 @@ function App() {
         component={LearnedLessonResult}
       />
       <UserRoute exact path="/edit-profile" component={EditProfile} />
+      <UserRoute exact path="/following/:userId" component={Following} />
+      <UserRoute exact path="/followers/:userId" component={Followers} />
       <AdminAuthRoute exact path="/admin" component={AdminSignIn} />
       <AdminRoute exact path="/admin/categories" component={AdminCategories} />
       <AdminRoute

@@ -53,14 +53,18 @@ const Profile = () => {
             <div className="ui grid center aligned">
               <div className="eight wide column">
                 <h1 className="ui header">
-                  {data.details.count_total_followers}
-                  <div className="sub header">Followers</div>
+                  <Link to={`/followers/${data.details.user.id}`}>
+                    {data.details.count_total_followers}
+                    <div className="sub header">Followers</div>
+                  </Link>
                 </h1>
               </div>
               <div className="eight wide column">
                 <h1 className="ui header">
-                  {data.details.count_total_following}
-                  <div className="sub header">Following</div>
+                  <Link to={`/following/${data.details.user.id}`}>
+                    {data.details.count_total_following}
+                    <div className="sub header">Following</div>
+                  </Link>
                 </h1>
               </div>
             </div>

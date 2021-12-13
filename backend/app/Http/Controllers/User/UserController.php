@@ -323,4 +323,38 @@ class UserController extends Controller
 
         return $user;
     }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function showFollowing(User $user)
+    {
+        if ($user->isAdmin === 1) {
+            return response([
+                'message' => 'Unauthorized'
+            ], 401);
+        }
+        
+        return User::getFollowing($user);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function showFollowers(User $user)
+    {
+        if ($user->isAdmin === 1) {
+            return response([
+                'message' => 'Unauthorized'
+            ], 401);
+        }
+
+        return User::getFollowers($user);
+    }
 }
