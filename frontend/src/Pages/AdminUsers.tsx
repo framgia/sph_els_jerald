@@ -18,7 +18,7 @@ const AdminUsers = () => {
 
   return (
     <Fragment>
-      <h2>Categories</h2>
+      <h2>Users</h2>
       <table className="ui celled padded table stackable">
         <thead>
           <tr>
